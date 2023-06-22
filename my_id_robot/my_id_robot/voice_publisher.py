@@ -1,6 +1,8 @@
 import rclpy
 from rclpy.node import Node
-from pocketsphinx import LiveSpeech, get_model_path
+import queue
+import sounddevice as sd
+from vosk import Model, KaldiRecognizer
 
 from std_msgs.msg import String
 import os
@@ -25,23 +27,30 @@ class VoicePublisher(Node):
             self.publisher_.publish(msg)
             self.get_logger().info('Publishing: "%s"' % msg.data)
 
+q = queue.Queue()
 
-        
+def callback(indata, frames, time, status):
+    """This is called (from a separate thread) for each audio block."""
+    if status:
+        print(status, file=sys.stderr)
+    q.put(bytes(indata))  
+
+model = Model(lang="en-us", model_path="/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/vosk-model-small-en-us-0.15")
+
 def main(args=None):
     rclpy.init(args=args)
-    model_path = get_model_path()
-    # this configures pocketsphinx to return voice commands
     voice_publisher = VoicePublisher()
-    for phrase in LiveSpeech(
-            verbose=False,
-            sampling_rate=16000,
-            buffer_size=2048,
-            no_search=False,
-            full_utt=False,
-        #    hmm=os.path.join(model_path, 'en-us'),
-            lm='/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/2301.lm',
-            dic='/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/2301.dic'):
-        voice_publisher.publish_string(phrase)
+    with sd.RawInputStream(samplerate=44100, blocksize = 8000, device=None,
+                       dtype="int16", channels=1, callback=callback):
+        rec = KaldiRecognizer(model, 44100)
+        while True:
+            data = q.get()
+            if rec.AcceptWaveform(data):
+                command = rec.Result()
+                command_split = command.split(":")
+                final_command = command_split[1].strip("\" \n\"}")
+  #               print(final_command)
+                voice_publisher.publish_string(final_command)
  
 
                

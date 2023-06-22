@@ -118,7 +118,11 @@ void loop() {
         setAllWheelsOff();
         LCD = OFF;
     }
+
+    Serial.print("Received instruction: ");
+    Serial.println(instruction);
   }
+
 
   // After updating the states, write the values to the pins.
   digitalWrite(LB_PIN, LEFT_BACK);
@@ -259,7 +263,7 @@ void turnOnLED(char LED)
   case 'b':
     LED_B = ON;
     break;
-  case: 'o':
+  case 'o':
     setAllLEDsOFF();
   default:
     break;

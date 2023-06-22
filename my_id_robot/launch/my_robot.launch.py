@@ -29,8 +29,32 @@ def generate_launch_description():
         output="screen"
     )   
 
+    arduino_node = Node(
+        package="my_id_robot",
+        executable="arduino_subscriber",
+        name="arduino",
+        output="screen"
+    )   
+
+    ir_node = Node(
+        package="my_id_robot",
+        executable="ir_publisher",
+        name="infrared",
+        output="screen"
+    )   
+
+    ultrasonic_node = Node(
+        package="my_id_robot",
+        executable="ultrasonic_publisher",
+        name="ultrasonic",
+        output="screen"
+    )   
+
     ld.add_action(main_node)
-    ld.add_action(servo_node)
+    # ld.add_action(servo_node)
     ld.add_action(voice_node)
     ld.add_action(opencv_node)
+    ld.add_action(arduino_node)
+    ld.add_action(ir_node)
+    ld.add_action(ultrasonic_node)
     return ld

@@ -28,6 +28,8 @@ setup(
             'servo_subscriber = my_id_robot.servo_subscriber:main',
             'opencv_subscriber = my_id_robot.opencv_subscriber:main',
             'arduino_subscriber = my_id_robot.arduino_subscriber:main',
+            'ir_publisher = my_id_robot.ir_publisher:main',
+            'ultrasonic_publisher = my_id_robot.ultrasonic_publisher:main',
             'my_robot_launch = my_id_robot.my_robot_launch:main'
         ],
     },
