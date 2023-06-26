@@ -20,9 +20,12 @@ Ubuntu 22.04
 
 ROS2 Humble
 
+Used [Circuit Diagram](https://www.circuit-diagram.org/editor/) for creating schematic layouts.
+
 # Schematic
 * [Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)
 * [Arduino Sensor Schematic](https://crcit.net/c/a2194848292040c281df357a803242cb)
+* [Potential Layout for Additional Arduino](https://crcit.net/c/a2194848292040c281df357a803242cb)
 
 # Resources
 * [ROS2 Humble Documentation](https://docs.ros.org/en/humble/index.html)
