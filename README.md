@@ -22,6 +22,8 @@ ROS2 Humble
 
 Used [Circuit Diagram](https://www.circuit-diagram.org/editor/) for creating schematic layouts.
 
+ArduinoIDE, Visual Studio Code, Python, OpenCV, Vosk
+
 # Schematic
 * [Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)
 * [Arduino Sensor Schematic](https://crcit.net/c/a2194848292040c281df357a803242cb)
