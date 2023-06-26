@@ -20,12 +20,19 @@ Ubuntu 22.04
 
 ROS2 Humble
 
-# Resources
-* [Arduino Nano Docs](https://docs.arduino.cc/static/6442e69a615dcb88c48bdff43db1319d/A000005-datasheet.pdf)
-* [GitHub Reference](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-push-an-existing-project-to-GitHub)
+# Schematic
 * [Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)
 * [Arduino Sensor Schematic](https://crcit.net/c/a2194848292040c281df357a803242cb)
+
+# Resources
+* [ROS2 Humble Documentation](https://docs.ros.org/en/humble/index.html)
+* [Arduino Nano Docs](https://docs.arduino.cc/static/6442e69a615dcb88c48bdff43db1319d/A000005-datasheet.pdf)
 * [R2D2 Build Instructions](https://myr2d2build.com/build)
+* [GitHub Reference](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-push-an-existing-project-to-GitHub)
 
 
 # Future Work
+- Interfacing with camera
+- Use arduino for interrupt based interfacing with sensors
+- Using Jetson Nano in place of Raspberry Pi
+- Lightsaber Mechanism
