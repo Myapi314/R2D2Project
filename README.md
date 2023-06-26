@@ -14,7 +14,9 @@ This project used ROS2 to run the bulk of the project on our main computer (Rasp
 We used an arduino nano to handle the control of our motors and LEDs which communicated with our robot via a serial USB connection. 
 
 # Development Environment
-
+Raspberry Pi 4
+Ubuntu 22.04
+ROS2 Humble
 
 # Resources
 * [Arduino Nano Docs](https://docs.arduino.cc/static/6442e69a615dcb88c48bdff43db1319d/A000005-datasheet.pdf)
