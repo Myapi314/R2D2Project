@@ -15,7 +15,9 @@ We used an arduino nano to handle the control of our motors and LEDs which commu
 
 # Development Environment
 Raspberry Pi 4
+
 Ubuntu 22.04
+
 ROS2 Humble
 
 # Resources
