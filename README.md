@@ -10,8 +10,9 @@ This project used ROS2 to run the bulk of the project on our main computer (Rasp
 * arduino_subscriber
 * ir_publisher
 * ultrasonic_publisher
+* opencv_subscriber
 
-We used an arduino nano to handle the control of our motors and LEDs which communicated with our robot via a serial USB connection. 
+We used an arduino nano to handle the control of our motors and LEDs which communicated with our robot via a serial USB connection (see [arduino.md](my_id_robot/my_id_robot/ArduinoControl/arduino.md)). 
 
 # Development Environment
 Raspberry Pi 4
@@ -23,6 +24,11 @@ ROS2 Humble
 Used [Circuit Diagram](https://www.circuit-diagram.org/editor/) for creating schematic layouts.
 
 ArduinoIDE, Visual Studio Code, Python, OpenCV, Vosk
+
+# Hardware
+Replaced Arduino Nano with custom board (see __.zip)
+
+Camera, projector, mic, motor drivers
 
 # Schematic
 * [Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)

@@ -1,5 +1,7 @@
 # ArduinoControl Documentation
 This is the documentation for the ArduinoControl program. It will include information on the serial communication as well as how the incoming messages are interpreted by the code.
+
+[Return to Main](../../../README.md)
 ## Setup and Pinout
 Baud Rate: 9600
 | Arduino Pin | Pin Alias       | Description                                                                                                                                                               |
