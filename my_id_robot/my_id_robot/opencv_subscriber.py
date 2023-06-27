@@ -24,7 +24,7 @@ class OpencvSubscriber(Node):
         
     def listener_callback(self, msg):
         self.get_logger().info('Opencv from Main "%s"' % msg.data)
-        if (msg.data == "FIND" or msg.data == "GET"):
+        if (msg.data == "find" or msg.data == "get"):
             ret, frame = video.read()
             cv2.imshow("Web Cam", frame)
             cv2.waitKey(2000) 

@@ -284,6 +284,10 @@ void turnHead(char dir)
     // rotate head right
     TURN_HEAD_LEFT = LOW;
     TURN_HEAD_RIGHT = HIGH;
+  } else if (dir == 's') {
+    // stop head
+    TURN_HEAD_LEFT = LOW;
+    TURN_HEAD_RIGHT = LOW;
   } else {
     // default - do not rotate
     TURN_HEAD_LEFT = LOW;

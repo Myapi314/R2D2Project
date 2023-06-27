@@ -4,6 +4,7 @@ from rclpy.node import Node
 from time import sleep
 
 from std_msgs.msg import String
+from my_id_robot_interfaces.msg import Sensor
 
 
 class MainSubscriber(Node):
@@ -17,7 +18,7 @@ class MainSubscriber(Node):
             10)
         self.subscription  # prevent unused variable warning
         self.ir_subscription =self.create_subscription(
-            String,
+            Sensor,
             'sensor',
             self.sensor_callback,
             10
@@ -70,7 +71,11 @@ class MainSubscriber(Node):
             self.get_logger().info('Main to Motor: "%s"' % motor_msg.data)
 
     def sensor_callback(self, msg):
-        self.get_logger().info(msg.data)
+        # self.get_logger().info(str(msg.pin))
+        if msg.avoid:
+            self.get_logger().info("React to msg from pin " + msg.pin)
+
+        
           
 def main(args=None):
     rclpy.init(args=args)

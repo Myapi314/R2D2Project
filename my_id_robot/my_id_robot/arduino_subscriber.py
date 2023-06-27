@@ -4,6 +4,7 @@ from rclpy.node import Node
 import serial
 import time
 from std_msgs.msg import String
+from my_id_robot_interfaces.msg import Sensor
 
 class SerialServer(Node):
 
@@ -17,6 +18,13 @@ class SerialServer(Node):
             10
         )
         self.subscription   # prevent unused variable warning
+
+        self.sensor_subscription =self.create_subscription(
+            Sensor,
+            'sensor',
+            self.sensor_callback,
+            10
+        )
 
         self.get_logger().info("Serial Server Running")
 
@@ -33,6 +41,20 @@ class SerialServer(Node):
             self.go_right()
         elif msg.data == "scan left":
             self.go_left()
+
+    def sensor_callback(self, msg: Sensor):
+        if msg.avoid and (
+            msg.pin == 9 
+            or msg.pin == 10 
+            or msg.pin == 11
+            or msg.pin == 15):
+            self.stop()
+        elif msg.avoid and (
+            msg.pin == 20
+            or msg.pin == 21
+        ):
+            self.send_string('hs\n')
+
 
     def receive_msg(self):
         while self.arduino.in_waiting > 0:
@@ -68,6 +90,11 @@ class SerialServer(Node):
     def move(self, direction):
         self.get_logger().info(f'Arduino move motors {direction}...')
         self.arduino.write(direction.encode('utf-8'))
+
+    def stop(self):
+        self.get_logger().info("Tell motors to STOP")
+        self.arduino.write(b"ms\n")
+        self.receive_msg()
 
     def go_forward(self):
         self.get_logger().info("Tell motors to go FORWARD...")

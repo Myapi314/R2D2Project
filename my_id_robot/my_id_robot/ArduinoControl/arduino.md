@@ -50,6 +50,7 @@ Speed Increment Value: 50
 | "l"              | DEFAULT - changes nothing                                              |
 | "hl"             | Turn head left.                                                        |
 | "hr"             | Turn head right.                                                       |
+| "hs"             | Stop head.                                                        |
 | "h"              | DEFAULT - changes nothing                                              |
 | "d"              | Turn on LCD                                                            |
 | "q"              | Quit - turn off everything.                                            |

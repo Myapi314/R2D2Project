@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 import RPi.GPIO as GPIO
 import time
-from std_msgs.msg import String
+from my_id_robot_interfaces.msg import Sensor
 
 TX_PIN = 14
 RX_PIN = 15
@@ -13,7 +13,7 @@ class UltrasonicPublisher(Node):
         super().__init__('ultrasonic_publisher')
         # self.publisher_ = self.create_publisher(String, 'voice', 10)
         self.get_logger().info("Ultrasonic node running!")
-        self.publisher_ = self.create_publisher(String, 'sensor', 10)
+        self.publisher_ = self.create_publisher(Sensor, 'sensor', 10)
 
         self.pulse_start_ = 0
         self.pulse_end_ = 0
@@ -43,9 +43,16 @@ class UltrasonicPublisher(Node):
 
 
     def publish_sensor(self, distance):
-        msg = String()
-        msg.data = str(distance) + " cm"
+        # str(distance) + " cm"
+        msg = Sensor()
+        msg.pin = RX_PIN
+        if distance <= 10:
+            # Obstacle detected
+            msg.avoid = True
+        else:
+            msg.avoid = False
         self.publisher_.publish(msg)
+
 
     def setup(self):
         GPIO.setmode(GPIO.BCM)
