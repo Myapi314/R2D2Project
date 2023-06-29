@@ -48,6 +48,7 @@ Speed Increment Value: 50
 | "lg"             | Turn on green LED.                                                     |
 | "lr"             | Turn on red LED.                                                       |
 | "lb"             | Turn on blue LED.                                                      |
+| "lp"             | Turn on blue and red LED (purple).                                                      |
 | "lo"             | Turn off all LEDs.                                                     |
 | "l"              | DEFAULT - changes nothing                                              |
 | "hl"             | Turn head left.                                                        |

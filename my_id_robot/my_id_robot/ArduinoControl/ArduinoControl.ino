@@ -24,6 +24,9 @@
 #define IN4_PIN 13
 #define PWM_PIN 9
 
+// Potential pin to connect to button for universal stop all motors
+#define STOP_PIN A6
+
 #define DEFAULT_SPEED 150
 #define MAX_SPEED 255 // Should never exceed 255
 #define INC 50
@@ -77,12 +80,12 @@ void setup() {
   // Power off all outputs and set their states to be off.
   digitalWrite(LCD_PIN, LOW);
   LCD = OFF;
-  TURN_HEAD_LEFT = LOW;
-  TURN_HEAD_RIGHT = LOW;
+
   powerOffAllLEDs();
   setAllLEDsOFF();
   powerOffAllMotors();
   setAllWheelsOff();
+  setTurnHeadOff();
 
 }
 
@@ -114,9 +117,8 @@ void loop() {
         turnHead(instruction[1]);
       case 'q':
         // quit - turn off everything
-        setAllLEDsOFF();
-        setAllWheelsOff();
-        LCD = OFF;
+        resetAll();
+        
     }
 
     Serial.print("Received instruction: ");
@@ -177,6 +179,22 @@ void setAllWheelsOff()
   LEFT_BACK = LOW;
   RIGHT_FORWARD = LOW;
   RIGHT_BACK = LOW;
+}
+
+/* Set state of all head motors to be off. */
+void setTurnHeadOff()
+{
+  TURN_HEAD_LEFT = LOW;
+  TURN_HEAD_RIGHT = LOW;
+}
+
+/* Set everything off */
+void resetAll()
+{
+  setAllLEDsOFF();
+  setAllWheelsOff();
+  setTurnHeadOff();
+  LCD = OFF;
 }
 
 /* 
@@ -263,8 +281,13 @@ void turnOnLED(char LED)
   case 'b':
     LED_B = ON;
     break;
+  case 'p':
+    LED_B = ON;
+    LED_R = ON;
+    break;
   case 'o':
     setAllLEDsOFF();
+    break;
   default:
     break;
   }
@@ -286,11 +309,9 @@ void turnHead(char dir)
     TURN_HEAD_RIGHT = HIGH;
   } else if (dir == 's') {
     // stop head
-    TURN_HEAD_LEFT = LOW;
-    TURN_HEAD_RIGHT = LOW;
+    setTurnHeadOff();
   } else {
     // default - do not rotate
-    TURN_HEAD_LEFT = LOW;
-    TURN_HEAD_RIGHT = LOW;
+    setTurnHeadOff();
   }
 }

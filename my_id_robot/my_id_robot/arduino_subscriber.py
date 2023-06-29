@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 import serial
 import time
+from subprocess import call
 from std_msgs.msg import String
 from my_id_robot_interfaces.msg import Sensor
 
@@ -28,13 +29,23 @@ class SerialServer(Node):
 
         self.get_logger().info("Serial Server Running")
 
+        # Setup serial connection
         self.arduino = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         self.arduino.reset_input_buffer()
 
-        # self.create_timer(1.0, self.receive_msg)
-
     def listener_callback(self, msg):
         self.get_logger().info('Arduino message "%s"' % msg.data)
+        if msg.data == "BOOT UP SEQ":
+            # Start up sequence
+            self.go_forward(secs=1)
+            self.stop()
+            self.red_led_on()
+            self.send_string('hl\n', secs=3)
+            self.send_string('hr\n', secs=3)
+            self.send_string('hs\n')
+            self.purple_led_on()
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2a.wav"])
+            
         if msg.data == "forward":
             self.go_forward()
         elif msg.data == "scan right":
@@ -55,6 +66,9 @@ class SerialServer(Node):
         ):
             self.send_string('hs\n')
 
+    def turn_off_everything(self):
+        self.get_logger().error("Turn off everything!")
+        self.arduino.write(b"q\n")
 
     def receive_msg(self):
         while self.arduino.in_waiting > 0:
@@ -62,22 +76,23 @@ class SerialServer(Node):
             self.get_logger().info(line)
         # else:
         #     self.get_logger().info('Nothing incoming')
-    
-    def send_char(self, instruction):
-        self.get_logger().info('Sending to Arduino ' + instruction + '...')
-        self.arduino.write(instruction.encode('utf-8'))
 
-    def send_string(self, instruction):
+    def send_string(self, instruction, secs: float = 0):
         self.get_logger().info(f'Send String to Arduino: {instruction}')
         self.arduino.write(instruction.encode('utf-8'))
+        time.sleep(secs)
 
     def red_led_on(self):
         self.get_logger().info('Turning on RED LED...')
-        self.arduino.write(str(3).encode('utf-8'))
+        self.arduino.write(b"lr\n")
 
-    def turn_off(self):
+    def purple_led_on(self):
+        self.get_logger().info('Turning on PURPLE LED...')
+        self.arduino.write(b"lp\n")
+
+    def turn_off_leds(self):
         self.get_logger().info('Turning off lights!')
-        self.arduino.write(str(-1).encode('utf-8'))
+        self.arduino.write(b"lo\n")
 
     def toggle_leds(self):
         self.get_logger().info('Enjoy the light show!')
@@ -96,9 +111,11 @@ class SerialServer(Node):
         self.arduino.write(b"ms\n")
         self.receive_msg()
 
-    def go_forward(self):
+    # Control Wheels
+    def go_forward(self, secs: float = 0):
         self.get_logger().info("Tell motors to go FORWARD...")
         self.arduino.write(b"mf\n")
+        time.sleep(secs)
         self.receive_msg()
 
     def go_backward(self):

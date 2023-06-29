@@ -27,12 +27,23 @@ class MainSubscriber(Node):
         self.servopublisher_ = self.create_publisher(String, 'servo', 10)    
         self.arduinopublisher_ = self.create_publisher(String, 'arduino', 10)
 
+        start_msg = String()
+        start_msg.data = '%s' % "BOOT UP SEQ"
+        self.get_logger().info('Main to Arduino: "%s"' % start_msg.data)
+        self.arduinopublisher_.publish(start_msg)
+        
+        
+
+
     def listener_callback(self, msg):
         self.get_logger().info('Main Voice data "%s"' % msg.data)
         # Turn off the microphone
         call(["pactl", "set-source-mute", "1", "toggle"])
 #        # Execute espeak using subprocess.run() 
-        call(["espeak", "-ven-us+f3", msg.data])
+
+        # repeat msg
+        # call(["espeak", "-ven-us+f3", msg.data])
+
 #        call(["espeak", "-ven-us+f3", msg.data])
                 #        sleep(2)
         #Turn on the microphone
