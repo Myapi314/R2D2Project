@@ -25,7 +25,7 @@ Used [Circuit Diagram](https://www.circuit-diagram.org/editor/) for creating sch
 
 ArduinoIDE, Visual Studio Code, Python, OpenCV, Vosk
 
-### Setup environment
+### Setup environment 
 Check if virtualenv is installed \
 ```virtualenv --version``` 
 
@@ -58,7 +58,21 @@ Specifically- vosk, sounddevice, RPi.GPIO
 Can install all but vosk by uncommenting dependencies in package.xml file and running ```rosdep install --from-paths src -y --ignore-src --reinstall```, however it will give you warnings about using pip as the root. Run without --reinstall flag if not uncommenting those two lines.
 
 For automatic startup a service file was used ([see here](my_id_robot.service.txt)). This file was created ```sudo nano /etc/systemd/system/my_id_robot.service```. Then run the following commands to set it up: \
+```sudo systemctl daemon-reload``` \
+```sudo systemctl enable yourscriptname.service``` \
+```sudo systemctl start yourscriptname.service``` \
+From [Run a script on startup in Linux](https://www.tutorialspoint.com/run-a-script-on-startup-in-linux)
 
+Information for environment variables was found in [ROS2 Humble Documentation](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html). Recommended to follow documentation for adding sourcing to shell startup script. 
+
+Anytime the service file is edited, run the reload command. Can stop and restart the service file using: \
+```sudo systemctl stop turtlebot4.service``` \
+```sudo systemctl start turtlebot4.service``` 
+
+Can view logs from the service with either \
+```sudo journalctl -u my_id_robot -r``` \
+```sudo systemctl status my_id_robot``` \
+From [How Does the ROS2 Turtlebot4 Service Launch When the TurtleBot Boots Up?](http://iotdesignshop.com/2022/11/06/how-does-the-ros2-turtlebot4-service-launch-when-the-turtlebot-boots-up/)
 
 # Hardware
 Replaced Arduino Nano with custom board (see __.zip)
