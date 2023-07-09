@@ -87,10 +87,17 @@ Camera, projector, mic, motor drivers
 # Resources
 * [ROS2 Humble Documentation](https://docs.ros.org/en/humble/index.html)
 * [Robotics Backend ROS2 Interfaces](https://roboticsbackend.com/ros2-create-custom-message/)
+* [Robotics Backend Arduino Serial Communication](https://roboticsbackend.com/raspberry-pi-arduino-serial-communication/)
 * [Arduino Nano Docs](https://docs.arduino.cc/static/6442e69a615dcb88c48bdff43db1319d/A000005-datasheet.pdf)
 * [R2D2 Build Instructions](https://myr2d2build.com/build)
 * [GitHub Reference](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-push-an-existing-project-to-GitHub)
 
+### Issues/bugs 
+* Arduino not showing up on ports: \
+  Check ```ls /dev/tty*```. Should see something like /dev/ttyUSB0. Can check by running command before and after plugging in Arduino to USB ports. Otherwise can refer to [discussion board](https://askubuntu.com/questions/1410062/installed-arduino-cant-find-dev-usb0-or-dev-acm0) for information on how to make the ports visible.
+
+* Issue with Colcon build: \
+  Colcon build only works with a specific version of setup tools. See [here](https://answers.ros.org/question/396439/setuptoolsdeprecationwarning-setuppy-install-is-deprecated-use-build-and-pip-and-other-standards-based-tools/).
 
 # Future Work
 - Interfacing with camera
