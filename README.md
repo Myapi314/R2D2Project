@@ -55,7 +55,7 @@ Or according to the ros2 docs this command can be used: \
 ```python3 -m pip install -U <package_name>``` \
 Specifically- vosk, sounddevice, RPi.GPIO
 
-Can install all but vosk by uncommenting dependencies in package.xml file and running ```rosdep install --from-paths src -y --ignore-src --reinstall```, however it will give you warnings about using pip as the root. Run without --reinstall flag if not uncommenting those two lines.
+Can install all but vosk by uncommenting dependencies in package.xml file and running ```rosdep install --from-paths src -y --ignore-src --reinstall```, however it will give you warnings about using pip as the root. Run without --reinstall flag if not uncommenting those two lines. See [docs](https://docs.ros.org/en/humble/Tutorials/Intermediate/Rosdep.html) for more on rosdep.
 
 For automatic startup a service file was used ([see here](my_id_robot.service.txt)). This file was created ```sudo nano /etc/systemd/system/my_id_robot.service```. Then run the following commands to set it up: \
 ```sudo systemctl daemon-reload``` \
