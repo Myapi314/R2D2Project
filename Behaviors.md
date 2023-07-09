@@ -2,7 +2,7 @@
 This file contains the outline of expected R2D2 Behaviors.
 
 ## Startup
-At the initial run of the launch file (whether that be manually or on startup) R2D2 should perform the following actions: \
+At the initial run of the launch file (whether that be manually or on startup) R2D2 should perform the following actions: 
 * Jolt forward slightly
 * Turn on red LED
 * Turn head all the way left
