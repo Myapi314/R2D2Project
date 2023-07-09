@@ -25,6 +25,41 @@ Used [Circuit Diagram](https://www.circuit-diagram.org/editor/) for creating sch
 
 ArduinoIDE, Visual Studio Code, Python, OpenCV, Vosk
 
+### Setup environment
+Check if virtualenv is installed \
+```virtualenv --version``` 
+
+To install: \
+```sudo apt update``` \
+```sudo apt install python3-virtualenv``` 
+
+Setup virtualenv in ros2_ws directory \
+```virtualenv -p python3 ./venv``` 
+
+Activate environment: \
+```source ./venv/bin/activate``` 
+
+Ignore the virtual environement folder (venv) by creating a file named COLCON_IGNORE within the folder. \
+```touch ~/ros2_ws/venv/COLCON_IGNORE```
+
+Install dependencies from requirements.txt. \
+```(venv) $ python -m pip install -r src/requirements.txt```\
+Be sure to have the virtual environment active and to update this file when adding new dependencies. \
+```(venv) $ python -m pip freeze > src/requirements.txt```
+
+[Venv Python Docs](https://docs.python.org/3/tutorial/venv.html)
+
+Note: For the robot to launch on bootup of computer it required having dependencies installed globally. This command seemed to do the trick for the few modules that this was an issue for: \
+```sudo -H pip3 install -U -I <package_name>```\
+Or according to the ros2 docs this command can be used: \
+```python3 -m pip install -U <package_name>``` \
+Specifically- vosk, sounddevice, RPi.GPIO
+
+Can install all but vosk by uncommenting dependencies in package.xml file and running ```rosdep install --from-paths src -y --ignore-src --reinstall```, however it will give you warnings about using pip as the root. Run without --reinstall flag if not uncommenting those two lines.
+
+For automatic startup a service file was used ([see here](my_id_robot.service.txt)). This file was created ```sudo nano /etc/systemd/system/my_id_robot.service```. Then run the following commands to set it up: \
+
+
 # Hardware
 Replaced Arduino Nano with custom board (see __.zip)
 
