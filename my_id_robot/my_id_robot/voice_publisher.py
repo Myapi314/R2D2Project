@@ -41,7 +41,8 @@ model = Model(lang="en-us", model_path="/home/redleader/ros2_ws/src/my_id_robot/
 def main(args=None):
     rclpy.init(args=args)
     voice_publisher = VoicePublisher()
-    with sd.RawInputStream(samplerate=44100, blocksize = 8000, device=None,
+    # Was having some issues with blocksize=8000, 4000 seems to be working better
+    with sd.RawInputStream(samplerate=44100, blocksize = 4000, device=None,
                        dtype="int16", channels=1, callback=callback):
         rec = KaldiRecognizer(model, 44100)
         while True:

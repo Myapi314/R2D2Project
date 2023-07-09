@@ -3,12 +3,17 @@
 <package format="3">
   <name>my_id_robot</name>
   <version>0.0.1</version>
-  <description>Simple Robotic Arm</description>
+  <description>R2D2 Robot</description>
   <maintainer email="grimmettr@byui.edu">jetson</maintainer>
   <license>Apache License 2.0</license>
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>ros2launch</exec_depend>
+  <exec_depend>python3-serial</exec_depend>
+  <!-- Recommended to use a virtual env instead -->
+  <!-- <exec_depend>python3-sounddevice-pip</exec_depend> -->
+  <!-- <exec_depend>python-rpi.gpio-pip</exec_depend> -->
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>

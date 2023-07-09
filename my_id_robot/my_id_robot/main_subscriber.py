@@ -42,7 +42,7 @@ class MainSubscriber(Node):
 #        # Execute espeak using subprocess.run() 
 
         # repeat msg
-        # call(["espeak", "-ven-us+f3", msg.data])
+        call(["espeak", "-ven-us+f3", msg.data])
 
 #        call(["espeak", "-ven-us+f3", msg.data])
                 #        sleep(2)
@@ -84,7 +84,7 @@ class MainSubscriber(Node):
     def sensor_callback(self, msg):
         # self.get_logger().info(str(msg.pin))
         if msg.avoid:
-            self.get_logger().info("React to msg from pin " + msg.pin)
+            self.get_logger().info(f"React to msg from pin {msg.pin}")
 
         
           
