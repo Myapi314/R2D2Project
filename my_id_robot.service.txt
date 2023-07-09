@@ -1,0 +1,15 @@
+[Unit]
+Description="Project R2D2"
+
+[Service]
+Environment="ROS_DOMAIN_ID=22"
+Environment="ROS_LOG_DIR=/home/redleader/my_logs"
+Environment="LD_LIBRARY_PATH=/home/redleader/ros2_ws/install/my_id_robot_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib"
+Environment="PYTHONPATH=/home/redleader/ros2_ws/build/my_id_robot:/home/redleader/ros2_ws/install/my_id_robot/lib/python3.10/site-packages:/home/redleader/ros2_ws/install/my_id_robot_inter>
+Environment="AMENT_PREFIX_PATH=/home/redleader/ros2_ws/install/my_id_robot:/home/redleader/ros2_ws/install/my_id_robot_interfaces:/opt/ros/humble"
+
+ExecStart=/opt/ros/humble/bin/ros2 launch my_id_robot my_robot.launch.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
