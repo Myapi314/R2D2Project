@@ -66,8 +66,8 @@ From [Run a script on startup in Linux](https://www.tutorialspoint.com/run-a-scr
 Information for environment variables was found in [ROS2 Humble Documentation](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html). Recommended to follow documentation for adding sourcing to shell startup script. There is also information under Demos/Logging for the ROS_LOG_DIR variable.
 
 Anytime the service file is edited, run the reload command. Can stop and restart the service file using: \
-```sudo systemctl stop turtlebot4.service``` \
-```sudo systemctl start turtlebot4.service``` 
+```sudo systemctl stop <service_name>``` \
+```sudo systemctl start <service_name>``` 
 
 Can view logs from the service with either \
 ```sudo journalctl -u my_id_robot -r``` \
