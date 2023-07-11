@@ -44,11 +44,14 @@ Speed Increment Value: 50
 | "sd"             | Slow down. Decreases speed to min value of 0, by defined INC value.    |
 | "sn"             | Set speed to default speed.                                            |
 | "s"              | DEFAULT - changes nothing                                              |
-| "ly"             | Turn on yellow LED.                                                    |
-| "lg"             | Turn on green LED.                                                     |
-| "lr"             | Turn on red LED.                                                       |
-| "lb"             | Turn on blue LED.                                                      |
-| "lp"             | Turn on blue and red LED (purple).                                                      |
+| "lyh"             | Turn on yellow LED.                                                    |
+| "lgh"             | Turn on green LED.                                                     |
+| "lrh"             | Turn on red LED.                                                       |
+| "lbh"             | Turn on blue LED.                                                      |
+| "lyo"             | Turn off yellow LED.                                                    |
+| "lgo"             | Turn off green LED.                                                     |
+| "lro"             | Turn off red LED.                                                       |
+| "lbo"             | Turn off blue LED.                                                      |
 | "lo"             | Turn off all LEDs.                                                     |
 | "l"              | DEFAULT - changes nothing                                              |
 | "hl"             | Turn head left.                                                        |
