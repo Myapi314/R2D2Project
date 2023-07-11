@@ -75,7 +75,10 @@ class MainSubscriber(Node):
             motor_msg.data = '%s' % msg.data
             self.arduinopublisher_.publish(motor_msg)
             self.get_logger().info('Main to Motor: "%s"' % motor_msg.data)
-        elif (msg.data == "forward"):
+        elif (msg.data == "forward" 
+              or msg.data == "stop"
+              or msg.data == "left"
+              or msg.data == "right"):
             motor_msg = String()
             motor_msg.data = '%s' % msg.data
             self.arduinopublisher_.publish(motor_msg)
@@ -84,7 +87,8 @@ class MainSubscriber(Node):
     def sensor_callback(self, msg):
         # self.get_logger().info(str(msg.pin))
         if msg.avoid:
-            self.get_logger().info(f"React to msg from pin {msg.pin}")
+            pass
+            # self.get_logger().info(f"React to msg from pin {msg.pin}")
 
         
           

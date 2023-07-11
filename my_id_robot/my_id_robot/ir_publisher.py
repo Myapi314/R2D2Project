@@ -35,8 +35,8 @@ class InfraredPublisher(Node):
         msg.pin = pin
         msg.avoid = False
         # set to not for testing, will send signal when close to object rather than far away
-        if not GPIO.input(pin):
-            self.get_logger().info("Infrared Sensed Something")
+        if GPIO.input(pin):
+            # self.get_logger().info("Infrared Sensed Something")
             msg.avoid = True
             self.publisher_.publish(msg)
 

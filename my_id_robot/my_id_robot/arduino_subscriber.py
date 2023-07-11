@@ -37,20 +37,22 @@ class SerialServer(Node):
         self.get_logger().info('Arduino message "%s"' % msg.data)
         if msg.data == "BOOT UP SEQ":
             # Start up sequence
-            self.go_forward(secs=1)
+            self.go_forward(secs=0.5)
             self.stop()
             self.red_led_on()
-            self.send_string('hl\n', secs=3)
-            self.send_string('hr\n', secs=3)
+            self.send_string('hl\n', secs=1)
+            self.send_string('hr\n', secs=1)
             self.send_string('hs\n')
             self.purple_led_on()
             call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2a.wav"])
             
         if msg.data == "forward":
             self.go_forward()
-        elif msg.data == "scan right":
+        elif msg.data == "stop":
+            self.stop()
+        elif msg.data == "right":
             self.go_right()
-        elif msg.data == "scan left":
+        elif msg.data == "left":
             self.go_left()
 
     def sensor_callback(self, msg: Sensor):
@@ -59,12 +61,14 @@ class SerialServer(Node):
             or msg.pin == 10 
             or msg.pin == 11
             or msg.pin == 15):
-            self.stop()
+            pass
+            # self.stop()
         elif msg.avoid and (
             msg.pin == 20
             or msg.pin == 21
         ):
-            self.send_string('hs\n')
+            pass
+            # self.send_string('hs\n')
 
     def turn_off_everything(self):
         self.get_logger().error("Turn off everything!")
@@ -84,11 +88,11 @@ class SerialServer(Node):
 
     def red_led_on(self):
         self.get_logger().info('Turning on RED LED...')
-        self.arduino.write(b"lr\n")
+        self.arduino.write(b"lrh\n")
 
     def purple_led_on(self):
         self.get_logger().info('Turning on PURPLE LED...')
-        self.arduino.write(b"lp\n")
+        self.arduino.write(b"lbh\n")
 
     def turn_off_leds(self):
         self.get_logger().info('Turning off lights!')
