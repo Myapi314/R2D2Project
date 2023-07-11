@@ -4,7 +4,8 @@
 #define LED_B_PIN A3
 
 #define LCD_PIN A4
-// #define SERVO_PIN 10
+
+#define PROJ_PIN A5 // pin for projector
 
 #define LF_PIN 2        // LEFT FORWARD - IN1
 #define LB_PIN 4        // LEFT BACKWARD - IN2
@@ -15,14 +16,14 @@
 #define RIGHT_PWM_PIN 5 // RIGHT SPEED - ENB
 
 // Head Motor pins
-#define HL_PIN 10      // HEAD LEFT - IN1
-#define HR_PIN 11      // HEAD_RIGHT - IN2
-#define HEAD_PWM_PIN 6  // HEAD SPEED - ENA
+#define HL_PIN 12      // HEAD LEFT - IN3
+#define HR_PIN 13      // HEAD_RIGHT - IN4
+#define HEAD_PWM_PIN 9  // HEAD SPEED - ENB
 
-// Possible additional motor control pins
-#define IN3_PIN 12
-#define IN4_PIN 13
-#define PWM_PIN 9
+// Possible additional motor control pins - TODO: Rename pin definitions 
+#define IN1_PIN 10
+#define IN2_PIN 11
+#define PWM_PIN 6
 
 // Potential pin to connect to button for universal stop all motors
 #define STOP_PIN A6
@@ -35,7 +36,7 @@
 #define OFF LOW
 
 int WHEEL_SPEED = DEFAULT_SPEED;
-int TURN_SPEED = 100;   // May need to be adjusted
+int TURN_SPEED = 50;   // May need to be adjusted
 
 // LED and LCD states
 int LED_R;
@@ -53,6 +54,11 @@ int RIGHT_BACK;
 // Head state
 int TURN_HEAD_LEFT;
 int TURN_HEAD_RIGHT;
+
+// Projector state
+int PROJ_STATE;
+unsigned long PROJ_INTERVAL = 2000;
+unsigned long projTimerStart;
 
 void setup() {
   Serial.begin(9600); //Sets the data rate in bits per second (baud) for serial data transmission
@@ -77,9 +83,14 @@ void setup() {
   pinMode(LED_B_PIN, OUTPUT);
   pinMode(LCD_PIN, OUTPUT);
 
+  // Set up Projector on button
+  pinMode(PROJ_PIN, OUTPUT);
+
   // Power off all outputs and set their states to be off.
   digitalWrite(LCD_PIN, LOW);
   LCD = OFF;
+
+  digitalWrite(PROJ_PIN, LOW);
 
   powerOffAllLEDs();
   setAllLEDsOFF();
@@ -106,7 +117,7 @@ void loop() {
         setWheelSpeed(instruction[1]);
       case 'l':
         // leds
-        turnOnLED(instruction[1]);
+        turnOnLED(instruction[1], instruction[2]);
         break;
       case 'd':
         // lcd
@@ -115,9 +126,20 @@ void loop() {
       case 'h':
         // turn head
         turnHead(instruction[1]);
+        break;
+      case 'p':
+        // simulate holding in projector button for 2 sec
+        if (PROJ_STATE == OFF) {
+          PROJ_STATE = ON;
+          digitalWrite(PROJ_PIN, HIGH);
+          projTimerStart = millis();
+          Serial.println("Time Started");
+        } 
+        break;
       case 'q':
         // quit - turn off everything
         resetAll();
+        break;
         
     }
 
@@ -140,7 +162,17 @@ void loop() {
 
   digitalWrite(LED_R_PIN, LED_R);
   digitalWrite(LED_B_PIN, LED_B);
+  digitalWrite(LED_G_PIN, LED_G);
+  digitalWrite(LED_Y_PIN, LED_Y);
   digitalWrite(LCD_PIN, LCD);
+
+  // Turn off Projector pin if it has been on for 2 seconds
+  if (millis() - projTimerStart >= PROJ_INTERVAL && PROJ_STATE == ON) {
+  PROJ_STATE = OFF;
+  digitalWrite(PROJ_PIN, LOW);
+  Serial.print("Time ENDED: ");
+  Serial.println(millis() - projTimerStart);
+  }
 }
 
 /* Set all LED pins with LOW signal. */
@@ -265,25 +297,22 @@ void setWheelSpeed(char dir)
  *  Sets the state of the LEDs. 
  *  LED: instruction corresponding to the color
  */
-void turnOnLED(char LED)
+void turnOnLED(char LED, char state)
 {
-  setAllLEDsOFF();
+//  setAllLEDsOFF();
+  boolean turnOn = state == 'h' ? ON : OFF;
   switch (LED) {
   case 'y':
-    LED_Y = ON;
+    LED_Y = turnOn;
     break;
   case 'g':
-    LED_G = ON;
+    LED_G = turnOn;
     break;
   case 'r':
-    LED_R = ON;
+    LED_R = turnOn;
     break;
   case 'b':
-    LED_B = ON;
-    break;
-  case 'p':
-    LED_B = ON;
-    LED_R = ON;
+    LED_B = turnOn;
     break;
   case 'o':
     setAllLEDsOFF();
