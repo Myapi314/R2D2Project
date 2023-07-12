@@ -63,6 +63,8 @@ For automatic startup a service file was used ([see here](my_id_robot.service.tx
 ```sudo systemctl start yourscriptname.service``` \
 From [Run a script on startup in Linux](https://www.tutorialspoint.com/run-a-script-on-startup-in-linux)
 
+Disable the service with ```sudo systemctl disable yourscriptname.service```
+
 Information for environment variables was found in [ROS2 Humble Documentation](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html). Recommended to follow documentation for adding sourcing to shell startup script. There is also information under Demos/Logging for the ROS_LOG_DIR variable.
 
 Anytime the service file is edited, run the reload command. Can stop and restart the service file using: \
