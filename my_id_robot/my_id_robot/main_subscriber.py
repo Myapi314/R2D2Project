@@ -6,8 +6,8 @@ from time import sleep
 from std_msgs.msg import String
 from my_id_robot_interfaces.msg import Sensor
 
-start_commands = ["hey are too", "hey are to", "hey are two", "hey or too", "hey or to", "hey or two"]
-arduino_commands = ["forward", "left", "right", "back", "stop"]
+start_commands = ["hey are too", "hey are to", "hey are two", "hey or too", "hey or to", "hey or two", "he are to", "here to", "he or to", "here are two"]
+arduino_commands = ["forward", "left", "right", "back", "stop", "projector"]
 
 class MainSubscriber(Node):
 
@@ -68,6 +68,11 @@ class MainSubscriber(Node):
         
         if (msg.data.find("hello") != -1):
             call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2c.wav"])
+
+        if (msg.data.find("stop") != -1):
+            motor_msg.data = "stop"
+            self.arduinopublisher_.publish(motor_msg)
+            self.get_logger().info('Main to Arduino: "%s"' % motor_msg.data)
         if (msg.data == "hello"):
             call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2.wav"])    
         elif (msg.data == "find"):

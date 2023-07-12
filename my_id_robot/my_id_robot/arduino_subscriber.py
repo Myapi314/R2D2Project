@@ -44,7 +44,7 @@ class SerialServer(Node):
             self.send_string('hr\n', secs=1)
             self.send_string('hs\n')
             self.purple_led_on()
-            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2a.wav"])
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2idea.wav"])
             
         if msg.data == "forward":
             self.go_forward()
@@ -54,6 +54,8 @@ class SerialServer(Node):
             self.go_right()
         elif msg.data == "left":
             self.go_left()
+        elif msg.data == "projector":
+            self.turn_on_proj()
 
     def sensor_callback(self, msg: Sensor):
         if msg.avoid and (
@@ -139,8 +141,12 @@ class SerialServer(Node):
         self.arduino.write(b"su\n")
 
     def slow_down(self):
-        self.get_logger.info("Tell motors to SLOW DOWN...")
+        self.get_logger().info("Tell motors to SLOW DOWN...")
         self.arduino.write(b"sd\n")
+
+    def turn_on_proj(self):
+        self.get_logger().info("Tell projector to turn on...")
+        self.arduino.write(b"p\n")
 
 def main(args=None):
     rclpy.init(args=args)
