@@ -6,6 +6,8 @@ from time import sleep
 from std_msgs.msg import String
 from my_id_robot_interfaces.msg import Sensor
 
+start_commands = ["hey are too", "hey are to", "hey are two", "hey or too", "hey or to", "hey or two"]
+arduino_commands = ["forward", "left", "right", "back", "stop"]
 
 class MainSubscriber(Node):
 
@@ -41,54 +43,43 @@ class MainSubscriber(Node):
         call(["pactl", "set-source-mute", "1", "toggle"])
 #        # Execute espeak using subprocess.run() 
 
-        # repeat msg
-        call(["espeak", "-ven-us+f3", msg.data])
+        # repeat msg over audio
+        # call(["espeak", "-ven-us+f3", msg.data])
 
 #        call(["espeak", "-ven-us+f3", msg.data])
                 #        sleep(2)
         #Turn on the microphone
         call(["pactl", "set-source-mute", "1", "toggle"])
+
+        motor_msg = String()
+
+        # Find key to look for command
+        send_command = False
+        for i in range(len(start_commands)):
+            if (msg.data.find(start_commands[i]) != -1):
+                send_command = True
+                break
+        if (send_command):
+            for i in range(len(arduino_commands)):
+                if (msg.data.find(arduino_commands[i]) != -1):
+                    motor_msg.data = '%s' % arduino_commands[i]
+                    self.arduinopublisher_.publish(motor_msg)
+                    self.get_logger().info('Main to Arduino: "%s"' % motor_msg.data)
+        
+        if (msg.data.find("hello") != -1):
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2c.wav"])
         if (msg.data == "hello"):
-            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2.wav"])
-        elif (msg.data == "reach"):
-            servo_msg = String()
-#            servo_msg.data = '%s' % msg.data
-#            self.servopublisher_.publish(servo_msg)
-            self.get_logger().info('Main to servo: "%s"' % servo_msg.data)
-        elif (msg.data == "wave"):
-            servo_msg = String()
-#            servo_msg.data = '%s' % msg.data
-#            self.servopublisher_.publish(servo_msg)
-            self.get_logger().info('Main to servo: "%s"' % servo_msg.data)      
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2.wav"])    
         elif (msg.data == "find"):
             opencv_msg = String()
             opencv_msg.data = '%s' % msg.data
             self.opencvpublisher_.publish(opencv_msg)
             self.get_logger().info('Main to Opencv: "%s"' % opencv_msg.data)
-        elif (msg.data == "scan right"):
-            motor_msg = String()
-            motor_msg.data = '%s' % msg.data
-            self.arduinopublisher_.publish(motor_msg)
-            self.get_logger().info('Main to Motor: "%s"' % motor_msg.data)
-        elif (msg.data == "scan left"):
-            motor_msg = String()
-            motor_msg.data = '%s' % msg.data
-            self.arduinopublisher_.publish(motor_msg)
-            self.get_logger().info('Main to Motor: "%s"' % motor_msg.data)
-        elif (msg.data == "forward" 
-              or msg.data == "stop"
-              or msg.data == "left"
-              or msg.data == "right"):
-            motor_msg = String()
-            motor_msg.data = '%s' % msg.data
-            self.arduinopublisher_.publish(motor_msg)
-            self.get_logger().info('Main to Motor: "%s"' % motor_msg.data)
 
     def sensor_callback(self, msg):
         # self.get_logger().info(str(msg.pin))
         if msg.avoid:
-            pass
-            # self.get_logger().info(f"React to msg from pin {msg.pin}")
+            self.get_logger().info(f"React to msg from pin {msg.pin}")
 
         
           
