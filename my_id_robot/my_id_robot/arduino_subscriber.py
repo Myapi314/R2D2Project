@@ -37,9 +37,9 @@ class SerialServer(Node):
         self.get_logger().info('Arduino message "%s"' % msg.data)
         if msg.data == "BOOT UP SEQ":
             # Start up sequence
+            self.red_led_on()
             self.go_forward(secs=0.5)
             self.stop()
-            self.red_led_on()
             self.send_string('hl\n', secs=1)
             self.send_string('hr\n', secs=1)
             self.send_string('hs\n')
@@ -47,6 +47,7 @@ class SerialServer(Node):
             call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2idea.wav"])
             
         if msg.data == "forward":
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2-relax.wav"])
             self.go_forward()
         elif msg.data == "stop":
             self.stop()
