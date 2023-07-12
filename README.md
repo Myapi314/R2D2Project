@@ -87,8 +87,7 @@ Camera, projector, mic, motor drivers
 # Schematic
 ![image](https://github.com/Myapi314/R2D2Project/assets/97209406/92639eee-5fe9-489c-8059-45912e8c8b3c) \
 [Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)
-* [Arduino Sensor Schematic](https://crcit.net/c/a2194848292040c281df357a803242cb)
-* [Potential Layout for Additional Arduino](https://crcit.net/c/a2194848292040c281df357a803242cb)
+* [Potential Layout for Additional Arduino for Sensors](https://crcit.net/c/a2194848292040c281df357a803242cb)
 
 # Resources
 * [ROS2 Humble Documentation](https://docs.ros.org/en/humble/index.html)
