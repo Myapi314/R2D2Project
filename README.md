@@ -110,6 +110,7 @@ Camera, projector, mic, motor drivers
 # Future Work
 - Interfacing with camera
 - Use arduino for interrupt based interfacing with sensors
+  This would be one of the first things to work on as the timing from the sensors has been pretty slow.
 - Using Jetson Nano in place of Raspberry Pi
 - Lightsaber Mechanism
 - Using a service file for automatic startup of R2D2 program
