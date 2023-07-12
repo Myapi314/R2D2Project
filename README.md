@@ -1,6 +1,9 @@
 # R2D2Project
 Senior Project Spring 2023
 
+Start up R2D2 program by running the following command: ```ros2 launch my_id_robot my_robot.launch.py``` \
+Ensure that ros2 and the workspace have been sourced if the command is not recognized (See ROS2 Documentation).
+
 # Overview
 This is the repository for development done on an R2D2 robot using a raspberry pi/Jetson Nano. The R2D2 robot was originally from a hobby project that fans of the Star Wars universe could build and put together themselves. However, all of the electronics and internal software came as is, with little to no ability to make your own hardware or software improvements. Our team then took apart the existing robot and rebuilt his insides to improve existing functionality and expand his capabilities. 
 
