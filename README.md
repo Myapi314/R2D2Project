@@ -26,7 +26,7 @@ ROS2 Humble
 
 Used [Circuit Diagram](https://www.circuit-diagram.org/editor/) for creating schematic layouts.
 
-ArduinoIDE, Visual Studio Code, Python, OpenCV, Vosk
+ArduinoIDE, Visual Studio Code, Python
 
 ### Setup environment 
 Check if virtualenv is installed \
@@ -80,14 +80,14 @@ Can view logs from the service with either \
 From [How Does the ROS2 Turtlebot4 Service Launch When the TurtleBot Boots Up?](http://iotdesignshop.com/2022/11/06/how-does-the-ros2-turtlebot4-service-launch-when-the-turtlebot-boots-up/)
 
 # Hardware
-Replaced Arduino Nano with custom board (see __.zip)
+Attempted to replace Arduino Nano with custom board (see __.zip).
 
 Camera, projector, mic, motor drivers
 
 # Schematic
-* [Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)
-* [Arduino Sensor Schematic](https://crcit.net/c/a2194848292040c281df357a803242cb)
-* [Potential Layout for Additional Arduino](https://crcit.net/c/a2194848292040c281df357a803242cb)
+![image](https://github.com/Myapi314/R2D2Project/assets/97209406/92639eee-5fe9-489c-8059-45912e8c8b3c) \
+[Schematic Diagram](https://crcit.net/c/94c71480c5b7491aa2f13e43693fd637)
+* [Potential Layout for Additional Arduino for Sensors](https://crcit.net/c/a2194848292040c281df357a803242cb)
 
 # Resources
 * [ROS2 Humble Documentation](https://docs.ros.org/en/humble/index.html)
@@ -103,6 +103,9 @@ Camera, projector, mic, motor drivers
 
 * Issue with Colcon build: \
   Colcon build only works with a specific version of setup tools. See [here](https://answers.ros.org/question/396439/setuptoolsdeprecationwarning-setuppy-install-is-deprecated-use-build-and-pip-and-other-standards-based-tools/).
+
+* Problem with running ros2 commands from the root: \
+  Unresolved issues with accessing audio and mic properly when launching nodes as root rather than as redleader.
 
 # Future Work
 - Interfacing with camera
