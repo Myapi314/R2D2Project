@@ -106,3 +106,4 @@ Camera, projector, mic, motor drivers
 - Use arduino for interrupt based interfacing with sensors
 - Using Jetson Nano in place of Raspberry Pi
 - Lightsaber Mechanism
+- Using a service file for automatic startup of R2D2 program
