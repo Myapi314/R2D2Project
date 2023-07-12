@@ -36,12 +36,12 @@ class InfraredPublisher(Node):
         msg.avoid = False
 
         if (pin == LFIR_PIN):
-            if GPIO.input(pin):
-                self.get_logger().info("Infrared Sensed Something on " + str(pin) )
+            if not GPIO.input(pin):
+                self.get_logger().debug("Infrared Sensed Something on " + str(pin) )
                 msg.avoid = True
         else:
             if not GPIO.input(pin):
-                self.get_logger().info("Infrared Sensed Something on " + str(pin))
+                self.get_logger().debug("Infrared Sensed Something on " + str(pin))
                 msg.avoid = True
         self.publisher_.publish(msg)
 

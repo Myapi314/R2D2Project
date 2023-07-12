@@ -7,7 +7,7 @@ from std_msgs.msg import String
 from my_id_robot_interfaces.msg import Sensor
 
 start_commands = ["hey are too", "hey are to", "hey are two", "hey or too", "hey or to", "hey or two", "he are to", "here to", "he or to", "here are two"]
-arduino_commands = ["forward", "left", "right", "back", "stop", "projector"]
+arduino_commands = ["forward", "left", "right", "back", "stop", "projector", "turn head", "spin"]
 
 class MainSubscriber(Node):
 
@@ -28,14 +28,7 @@ class MainSubscriber(Node):
         self.opencvpublisher_ = self.create_publisher(String, 'opencv', 10)
         self.servopublisher_ = self.create_publisher(String, 'servo', 10)    
         self.arduinopublisher_ = self.create_publisher(String, 'arduino', 10)
-
-        start_msg = String()
-        start_msg.data = '%s' % "BOOT UP SEQ"
-        self.get_logger().info('Main to Arduino: "%s"' % start_msg.data)
-        self.arduinopublisher_.publish(start_msg)
         
-        
-
 
     def listener_callback(self, msg):
         self.get_logger().info('Main Voice data "%s"' % msg.data)
@@ -68,13 +61,17 @@ class MainSubscriber(Node):
         
         if (msg.data.find("hello") != -1):
             call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2c.wav"])
+            motor_msg.data = "led"
+            self.arduinopublisher_.publish(motor_msg)
 
         if (msg.data.find("stop") != -1):
             motor_msg.data = "stop"
             self.arduinopublisher_.publish(motor_msg)
             self.get_logger().info('Main to Arduino: "%s"' % motor_msg.data)
-        if (msg.data == "hello"):
-            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2.wav"])    
+
+        if (msg.data.find("thank you") != -1):
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/bro-Grimmet.wav"])
+   
         elif (msg.data == "find"):
             opencv_msg = String()
             opencv_msg.data = '%s' % msg.data

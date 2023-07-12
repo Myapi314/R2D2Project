@@ -27,36 +27,58 @@ class SerialServer(Node):
             10
         )
 
-        self.get_logger().info("Serial Server Running")
-
         # Setup serial connection
         self.arduino = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         self.arduino.reset_input_buffer()
+        self.get_logger().info("Serial Server Running")
+
+        self.stop_head = False
+        self.projector_state = False
+
+        # Start up sequence
+        self.turn_off_everything()
+        self.red_led_on()
+        self.go_forward()
+        self.send_string('hl', secs=2)
+        # while (not self.stop_head):
+        #     pass
+        self.send_string('hr', secs=2)
+        self.send_string('hs')
+        # while (not self.stop_head):
+        #     pass
+        self.purple_led_on()
+        self.send_string('d')
+        call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2idea.wav"])
 
     def listener_callback(self, msg):
         self.get_logger().info('Arduino message "%s"' % msg.data)
-        if msg.data == "BOOT UP SEQ":
-            # Start up sequence
-            self.red_led_on()
-            self.go_forward(secs=0.5)
-            self.stop()
-            self.send_string('hl\n', secs=1)
-            self.send_string('hr\n', secs=1)
-            self.send_string('hs\n')
-            self.purple_led_on()
-            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2idea.wav"])
             
         if msg.data == "forward":
-            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2-relax.wav"])
             self.go_forward()
+            # call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2-relax.wav"])
         elif msg.data == "stop":
             self.stop()
+            self.send_string('hs')
         elif msg.data == "right":
             self.go_right()
         elif msg.data == "left":
             self.go_left()
+        elif msg.data == "back":
+            self.go_backward()
         elif msg.data == "projector":
             self.turn_on_proj()
+            self.projector_state = True
+        elif msg.data == "turn head":
+            self.send_string('hl')
+        elif msg.data == "led":
+            self.yellow_led_on()
+            self.red_led_on()
+        elif msg.data == "spin":
+            self.go_left()
+            self.red_led_on()
+            self.green_led_on()
+            call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/EasterEggs/cantina.wav"])
+            # self.toggle_leds()
 
     def sensor_callback(self, msg: Sensor):
         if msg.avoid and (
@@ -64,14 +86,18 @@ class SerialServer(Node):
             or msg.pin == 10 
             or msg.pin == 11
             or msg.pin == 15):
-            pass
             # self.stop()
-        elif msg.avoid and (
+            pass
+
+        if msg.avoid and (
             msg.pin == 20
             or msg.pin == 21
         ):
-            pass
-            # self.send_string('hs\n')
+            self.send_string('hs')
+            self.stop_head = True
+        else:
+            self.stop_head = False
+
 
     def turn_off_everything(self):
         self.get_logger().error("Turn off everything!")
@@ -86,32 +112,43 @@ class SerialServer(Node):
 
     def send_string(self, instruction, secs: float = 0):
         self.get_logger().info(f'Send String to Arduino: {instruction}')
+        instruction = instruction + '\n'
         self.arduino.write(instruction.encode('utf-8'))
         time.sleep(secs)
 
     def red_led_on(self):
+        self.arduino.write(b"lbo\n")
         self.get_logger().info('Turning on RED LED...')
         self.arduino.write(b"lrh\n")
 
+    def blue_led_on(self):
+        self.get_logger().info('Turning on BLUE LED...')
+        self.arduino.write(b"lbh\n")
+
+    def green_led_on(self):
+        self.arduino.write(b"lyo\n")
+        self.get_logger().info('Turning on GREEN LED...')
+        self.arduino.write(b"lgh\n")
+
     def purple_led_on(self):
         self.get_logger().info('Turning on PURPLE LED...')
+        self.arduino.write(b"lrh\n")
         self.arduino.write(b"lbh\n")
+
+    def yellow_led_on(self):
+        self.get_logger().info('Turning on YELLOW LED...')
+        self.arduino.write(b"lyh\n")
+
+    def toggle_leds(self):
+        led_states = ["lrh", "lro", "lbh", "lbo", "lgh", "lgo", "lyh", "lyo", "lrh", "lbh", "lgh", "lyh"]
+        for i in range(len(led_states)):
+            string = led_states[i] + "\n"
+            self.arduino.write(string.encode('utf-8'))
+            time.sleep(1)
 
     def turn_off_leds(self):
         self.get_logger().info('Turning off lights!')
         self.arduino.write(b"lo\n")
-
-    def toggle_leds(self):
-        self.get_logger().info('Enjoy the light show!')
-        led = 3
-        for i in range(10):
-            self.arduino.write(str(led).encode('utf-8'))
-            led = led % 2 + 3
-            time.sleep(1)
-
-    def move(self, direction):
-        self.get_logger().info(f'Arduino move motors {direction}...')
-        self.arduino.write(direction.encode('utf-8'))
 
     def stop(self):
         self.get_logger().info("Tell motors to STOP")
@@ -146,13 +183,14 @@ class SerialServer(Node):
         self.arduino.write(b"sd\n")
 
     def turn_on_proj(self):
-        self.get_logger().info("Tell projector to turn on...")
+        self.get_logger().info("Tell projector to turn on button...")
         self.arduino.write(b"p\n")
 
 def main(args=None):
     rclpy.init(args=args)
     serial_server = SerialServer()
     rclpy.spin(serial_server)
+    serial_server.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':

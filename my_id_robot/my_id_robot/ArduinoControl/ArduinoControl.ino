@@ -56,7 +56,8 @@ int TURN_HEAD_LEFT;
 int TURN_HEAD_RIGHT;
 
 // Projector state
-int PROJ_STATE;
+int PROJ_BUTTON_STATE;
+int PROJ_STATE = 0;
 unsigned long PROJ_INTERVAL = 2000;
 unsigned long projTimerStart;
 
@@ -129,8 +130,9 @@ void loop() {
         break;
       case 'p':
         // simulate holding in projector button for 2 sec
-        if (PROJ_STATE == OFF) {
-          PROJ_STATE = ON;
+        if (PROJ_BUTTON_STATE == OFF) {
+          PROJ_STATE = 1 - PROJ_STATE;
+          PROJ_BUTTON_STATE = ON;
           digitalWrite(PROJ_PIN, HIGH);
           projTimerStart = millis();
           Serial.println("Time Started");
@@ -167,8 +169,8 @@ void loop() {
   digitalWrite(LCD_PIN, LCD);
 
   // Turn off Projector pin if it has been on for 2 seconds
-  if (millis() - projTimerStart >= PROJ_INTERVAL && PROJ_STATE == ON) {
-  PROJ_STATE = OFF;
+  if (millis() - projTimerStart >= PROJ_INTERVAL && PROJ_BUTTON_STATE == ON) {
+  PROJ_BUTTON_STATE = OFF;
   digitalWrite(PROJ_PIN, LOW);
   Serial.print("Time ENDED: ");
   Serial.println(millis() - projTimerStart);
@@ -227,6 +229,13 @@ void resetAll()
   setAllWheelsOff();
   setTurnHeadOff();
   LCD = OFF;
+
+  // If the projector was on, turn it off
+  if (PROJ_STATE) {
+    digitalWrite(PROJ_PIN, HIGH);
+    delay(2);
+    digitalWrite(PROJ_PIN, LOW);
+  }
 }
 
 /* 
@@ -344,3 +353,4 @@ void turnHead(char dir)
     setTurnHeadOff();
   }
 }
+
