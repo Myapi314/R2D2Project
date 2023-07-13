@@ -227,12 +227,21 @@ void roam(int distance = 100)
 {
   if (distance > DETECT_DIST)
   {
+    if (distance > (2 * DETECT_DIST))
+    {
+      setWheelSpeed("u");
+    }
+    else
+    {
+      setWheelSpeed("n");
+    }
     setMotors("f");
   }
   else
   {
     setMotors("s");
     delay(1000);
+    setWheelSpeed("n");
     setMotors("b");
     delay(1000);
 
@@ -344,7 +353,7 @@ void setMotors(char dir)
  *  Sets the wheel speed for the motors.
  *  dir: incoming instruction code
  */
-void setWheelSpeed(char dir)
+void setWheelSpeed(char dir = 'n')
 {
   switch(dir) {
     case 'u':
