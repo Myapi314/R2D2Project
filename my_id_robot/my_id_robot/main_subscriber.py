@@ -7,7 +7,7 @@ from std_msgs.msg import String
 from my_id_robot_interfaces.msg import Sensor
 
 start_commands = ["hey are too", "hey are to", "hey are two", "hey or too", "hey or to", "hey or two", "he are to", "here to", "he or to", "here are two"]
-arduino_commands = ["forward", "left", "right", "back", "stop", "projector", "turn head", "spin"]
+arduino_commands = ["forward", "left", "right", "back", "stop", "projector", "turn head", "spin", "roam", "explore", "wander"]
 
 class MainSubscriber(Node):
 
@@ -28,6 +28,7 @@ class MainSubscriber(Node):
         self.opencvpublisher_ = self.create_publisher(String, 'opencv', 10)
         self.servopublisher_ = self.create_publisher(String, 'servo', 10)    
         self.arduinopublisher_ = self.create_publisher(String, 'arduino', 10)
+        self.projectorpublisher_ = self.create_publisher(String, 'projector', 10)
         
 
     def listener_callback(self, msg):
@@ -52,7 +53,15 @@ class MainSubscriber(Node):
             if (msg.data.find(start_commands[i]) != -1):
                 send_command = True
                 break
+
         if (send_command):
+            if (msg.data.find("video") != -1):
+                # publish projector message
+                motor_msg.data = "video"
+                self.projectorpublisher_.publish(motor_msg)
+                # publish arduino message
+                self.arduinopublisher_.publish(motor_msg)
+                
             for i in range(len(arduino_commands)):
                 if (msg.data.find(arduino_commands[i]) != -1):
                     motor_msg.data = '%s' % arduino_commands[i]

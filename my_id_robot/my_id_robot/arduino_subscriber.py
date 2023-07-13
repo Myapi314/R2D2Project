@@ -33,7 +33,7 @@ class SerialServer(Node):
         self.get_logger().info("Serial Server Running")
 
         self.stop_head = False
-        self.projector_state = False
+        self.projector_is_on = False
 
         # Start up sequence
         self.red_led_on()
@@ -55,6 +55,10 @@ class SerialServer(Node):
             self.stop()
         elif msg.data == "roam":
             self.start_roaming_mode()
+        elif msg.data == "wander":
+            self.start_roaming_mode()
+        elif msg.data == "explore":
+            self.start_roaming_mode()
         elif msg.data == "right":
             self.go_right()
         elif msg.data == "left":
@@ -62,8 +66,9 @@ class SerialServer(Node):
         elif msg.data == "back":
             self.go_backward()
         elif msg.data == "projector":
-            self.turn_on_proj()
-            self.projector_state = True
+            self.set_proj()
+        elif msg.data == "video":
+            self.set_proj("on")
         elif msg.data == "turn head":
             self.send_string('hl')
         elif msg.data == "led":
@@ -181,9 +186,22 @@ class SerialServer(Node):
         self.get_logger().info("Tell motors to SLOW DOWN...")
         self.arduino.write(b"wd\n")
 
-    def turn_on_proj(self):
-        self.get_logger().info("Tell projector to turn on...")
-        self.arduino.write(b"p\n")
+    def set_proj(self, command = "toggle"):
+        if (command == "toggle"):
+            if (self.projector_is_on):
+                self.arduino.write(b"p0\n")
+            else:
+                self.arduino.write(b"p1\n")
+            
+            self.projector_is_on = 1 - self.projector_is_on
+        elif (command == "on"):
+            self.arduino.write(b"p1\n")
+            self.projector_is_on = True
+        else:
+            self.arduino.write(b"p0\n")
+            self.projector_is_on = False
+        self.get_logger().info("Command to projector: " + command)
+        
 
 
 def main(args=None):

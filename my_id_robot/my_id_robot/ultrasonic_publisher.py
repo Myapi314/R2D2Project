@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 import RPi.GPIO as GPIO
 import time
+import random
 from my_id_robot_interfaces.msg import Sensor
 
 TX_PIN = 14
@@ -54,8 +55,6 @@ class UltrasonicPublisher(Node):
 
     def publish_sensor(self, distance):
 
-        # Send distance to Arduino
-        self.arduino.write("r" + str(distance) + "\n")
         msg = Sensor()
         msg.pin = RX_PIN
         if distance <= DETECT_DIST:
@@ -63,16 +62,22 @@ class UltrasonicPublisher(Node):
             msg.avoid = True
             self.arduino.write(b"ms\n") # Stop motors if obstacle is encountered
 
-            if (self.wandering_mode): # If in wandering mode, take control of motors
-                time.sleep(1)
-                self.arduino.write(b"mb\n")
-                time.sleep(1)
-                self.arduino.write(b"ml\n")
-                time.sleep(1)
-                self.arduino.write(b"mf\n")
+            # Tell Arduino how to avoid obstacle
+            time.sleep(1)
+            self.arduino.write(b"rb\n")
+            time.sleep(1)
+            turnDirection = "r" + str(random.randint(0,1))
+            self.arduino.write(turnDirection.encode('utf-8'))
+            time.sleep(1)
+            self.arduino.write(b"rf\n")
 
             self.get_logger().info(str(self.distance_) + " cm")
         else:
+            if distance <= (DETECT_DIST * 2):
+                self.arduino.write(b"rn\n")
+            else:
+                self.arduino.write(b"ru\n")
+            self.arduino.write(b"rf\n")
             msg.avoid = False
         self.publisher_.publish(msg)
 
