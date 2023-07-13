@@ -37,10 +37,12 @@
 
 int WHEEL_SPEED = DEFAULT_SPEED;
 int TURN_SPEED = 75;   // May need to be adjusted
+int DETECT_DIST = 50;
 unsigned long LIGHT_TOGGLE_TIME = 750; // Sets how often to toggle LEDs before first command
 unsigned long lastToggleTime = millis();
 bool instructionReceived = false;
 bool turnedRed = false;
+bool roamingModeOn = false;
 
 // LED and LCD states
 int LED_R;
@@ -113,11 +115,16 @@ void loop() {
 
     // Based on first char of instruction set the appropriate actions
     switch (instruction[0]) {
+      case 's':
+        // Full stop motors
+        roamingModeOn = false;
+        setAllWheelsOff();
+        setTurnHeadOff();
       case 'm':
         // move wheels
         setMotors(instruction[1]);
         break;
-      case 's':
+      case 'w':
         // speed of wheels
         setWheelSpeed(instruction[1]);
       case 'l':
@@ -133,14 +140,38 @@ void loop() {
         turnHead(instruction[1]);
         break;
       case 'p':
-        // simulate holding in projector button for 2 sec
-        if (PROJ_BUTTON_STATE == OFF) {
-          PROJ_STATE = 1 - PROJ_STATE;
-          PROJ_BUTTON_STATE = ON;
-          digitalWrite(PROJ_PIN, HIGH);
-          projTimerStart = millis();
-          Serial.println("Time Started");
-        } 
+        if (instruction[1] == '1') {
+          // Check if projector is off then turn on
+          if (!PROJ_STATE){
+            // simulate holding in projector button for 2 sec
+            if (PROJ_BUTTON_STATE == OFF) {
+              PROJ_STATE = 1 - PROJ_STATE;
+              PROJ_BUTTON_STATE = ON;
+              digitalWrite(PROJ_PIN, HIGH);
+              projTimerStart = millis();
+              Serial.println("Time Started");
+            } 
+          }
+        }
+        else if (instruction[1] == '0') {
+          // Check if projector is on, then turn off
+          if (PROJ_STATE){
+            // simulate holding in projector button for 2 sec
+            if (PROJ_BUTTON_STATE == OFF) {
+              PROJ_STATE = 1 - PROJ_STATE;
+              PROJ_BUTTON_STATE = ON;
+              digitalWrite(PROJ_PIN, HIGH);
+              projTimerStart = millis();
+              Serial.println("Time Started");
+            } 
+          }
+        }
+        
+        
+        break;
+      case 'r':
+        // Start roaming mode
+        roam(instruction[1]);
         break;
       case 'q':
         // quit - turn off everything
@@ -191,6 +222,45 @@ void loop() {
     LED_R = turnedRed ? ON : OFF;
     LED_B = turnedRed ? OFF : ON;
     }
+  }
+}
+
+void roam(char instruction)
+{
+  if (roamingModeOn)
+  {
+    // Roam
+    switch (instruction) {
+      case 'f':
+        // move wheels
+        setMotors('f');
+        break;
+      case 'b':
+        // move wheels
+        setMotors('b');
+      case '0':
+        // move wheels
+        setMotors('r');
+        break;
+      case '1':
+        // move wheels
+        setMotors('l');
+        break;
+      case 'u':
+        // Speed Up
+        setWheelSpeed('u');
+        break;
+      case 'n':
+        // Slow Down
+        setWheelSpeed('n');
+        break;
+    }
+  }
+  else if (instruction == 's')
+  {
+    // Start Roaming
+    roamingModeOn = true;
+    setMotors("f");
   }
 }
 
@@ -280,10 +350,12 @@ void setMotors(char dir)
     case 'l':
       // turn left
       RIGHT_FORWARD = HIGH;
+      LEFT_BACK = HIGH;
       break;
     case 'r':
       // turn right
-      LEFT_FORWARD = HIGH;
+      LEFT_FORWARD = HIGH;      
+      RIGHT_BACK = HIGH;
       break;
     default:
       break;
@@ -294,7 +366,7 @@ void setMotors(char dir)
  *  Sets the wheel speed for the motors.
  *  dir: incoming instruction code
  */
-void setWheelSpeed(char dir)
+void setWheelSpeed(char dir = 'n')
 {
   switch(dir) {
     case 'u':

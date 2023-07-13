@@ -33,7 +33,7 @@ class SerialServer(Node):
         self.get_logger().info("Serial Server Running")
 
         self.stop_head = False
-        self.projector_state = False
+        self.projector_is_on = False
 
         # Start up sequence
         self.red_led_on()
@@ -53,7 +53,12 @@ class SerialServer(Node):
             # call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2-relax.wav"])
         elif msg.data == "stop":
             self.stop()
-            self.send_string('hs')
+        elif msg.data == "roam":
+            self.start_roaming_mode()
+        elif msg.data == "wander":
+            self.start_roaming_mode()
+        elif msg.data == "explore":
+            self.start_roaming_mode()
         elif msg.data == "right":
             self.go_right()
         elif msg.data == "left":
@@ -61,8 +66,10 @@ class SerialServer(Node):
         elif msg.data == "back":
             self.go_backward()
         elif msg.data == "projector":
-            self.turn_on_proj()
-            self.projector_state = True
+            self.set_proj()
+        elif msg.data == "video":
+            self.set_proj("on")
+            self.stop()
         elif msg.data == "turn head":
             self.send_string('hl')
         elif msg.data == "led":
@@ -93,6 +100,9 @@ class SerialServer(Node):
         else:
             self.stop_head = False
 
+    def start_roaming_mode(self):
+        self.get_logger().info('Starting Roaming mode...')
+        self.arduino.write(b"rs\n")
 
     def turn_off_everything(self):
         self.get_logger().error("Turn off everything!")
@@ -147,7 +157,7 @@ class SerialServer(Node):
 
     def stop(self):
         self.get_logger().info("Tell motors to STOP")
-        self.arduino.write(b"ms\n")
+        self.arduino.write(b"s\n")
         self.receive_msg()
 
     # Control Wheels
@@ -171,15 +181,28 @@ class SerialServer(Node):
 
     def speed_up(self):
         self.get_logger().info("Tell motors to SPEED UP...")
-        self.arduino.write(b"su\n")
+        self.arduino.write(b"wu\n")
 
     def slow_down(self):
         self.get_logger().info("Tell motors to SLOW DOWN...")
-        self.arduino.write(b"sd\n")
+        self.arduino.write(b"wd\n")
 
-    def turn_on_proj(self):
-        self.get_logger().info("Tell projector to turn on button...")
-        self.arduino.write(b"p\n")
+    def set_proj(self, command = "toggle"):
+        if (command == "toggle"):
+            if (self.projector_is_on):
+                self.arduino.write(b"p0\n")
+            else:
+                self.arduino.write(b"p1\n")
+            
+            self.projector_is_on = 1 - self.projector_is_on
+        elif (command == "on"):
+            self.arduino.write(b"p1\n")
+            self.projector_is_on = True
+        else:
+            self.arduino.write(b"p0\n")
+            self.projector_is_on = False
+        self.get_logger().info("Command to projector: " + command)
+        
 
 
 def main(args=None):
