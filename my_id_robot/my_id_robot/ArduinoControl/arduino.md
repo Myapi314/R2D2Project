@@ -23,6 +23,7 @@ Baud Rate: 9600
 | A2          | "LED_R_PIN"     | Connected to the RED LED.                                                                                                                                                 |
 | A3          | "LED_B_PIN"     | Connected to the BLUE LED.                                                                                                                                                |
 | A4          | "LCD_PIN"       | Connected to both LCDs on the R2D2.                                                                                                                                       |
+| A5          | "PROJ_PIN"       | Connected to pin for projector button.                                                                                                                                       |
 ## Schematic
 ![image](https://github.com/Myapi314/R2D2Project/assets/97209406/1872a832-ad23-4fe4-9d23-5e6626a209b1)
 
