@@ -69,6 +69,7 @@ class SerialServer(Node):
             self.set_proj()
         elif msg.data == "video":
             self.set_proj("on")
+            self.stop()
         elif msg.data == "turn head":
             self.send_string('hl')
         elif msg.data == "led":
