@@ -81,7 +81,7 @@ class MainSubscriber(Node):
     def sensor_callback(self, msg):
         # self.get_logger().info(str(msg.pin))
         if msg.avoid:
-            self.get_logger().info(f"React to msg from pin {msg.pin}")
+            self.get_logger().debug(f"React to msg from pin {msg.pin}")
 
         
           

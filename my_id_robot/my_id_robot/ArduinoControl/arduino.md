@@ -59,4 +59,5 @@ Speed Increment Value: 50
 | "hs"             | Stop head.                                                        |
 | "h"              | DEFAULT - changes nothing                                              |
 | "d"              | Turn on LCD                                                            |
+| "p"              | "Press" projector button                                                            |
 | "q"              | Quit - turn off everything.                                            |

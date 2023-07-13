@@ -26,10 +26,10 @@ class OpencvSubscriber(Node):
         self.get_logger().info('Opencv from Main "%s"' % msg.data)
         if (msg.data == "find" or msg.data == "get"):
             ret, frame = video.read()
-            cv2.imshow("Web Cam", frame)
-            cv2.waitKey(2000) 
+            #cv2.imshow("Web Cam", frame)
+            #cv2.waitKey(2000) 
 #            video.release()
-            font = cv2.FONT_HERSHEY_COMPLEX 
+            #font = cv2.FONT_HERSHEY_COMPLEX 
             gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 #            cv2.imshow("Gray", gray_image)
 #            cv2.waitKey(2000) 
@@ -48,7 +48,7 @@ class OpencvSubscriber(Node):
                     if area > 2000 and area < 50000:
                         cv2.rectangle(frame, (x,y), (x+w,y+h), (0, 255, 0), 2)
 # Showing the final image. 
-                        cv2.imshow('Contours', frame) 
+                        #cv2.imshow('Contours', frame) 
                         cv2.waitKey(2000)
                         position = str(x) + "," + str(y)
                         position_msg = String()
