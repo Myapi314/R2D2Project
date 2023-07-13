@@ -35,8 +35,19 @@ class ProjectorSubscriber(Node):
         # Need to check to see if projector is turned on already
         # If not, we need to turn it on, wait for it to turn on,
         # reset the connection to it, then fire up vlc
+        
+        # Turn on the projector
+        self.arduino.write(b"p\n")
 
-        call(["vlc", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/Videos/'%s'.mp4" % video_name])
+        # Wait for projector to finish turning on and connecting
+        sleep(6)
+
+        # Play the video
+        call(["cvlc", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/Videos/'%s'.mp4" % video_name, "-f", "vlc://quit"])
+
+        # Turn off the projector
+        #self.arduino.write(b"p\n")
+        #sleep(3)
 
 def main(args=None):
     rclpy.init(args=args)
