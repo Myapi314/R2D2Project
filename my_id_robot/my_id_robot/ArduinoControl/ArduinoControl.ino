@@ -21,9 +21,9 @@
 #define HEAD_PWM_PIN 9  // HEAD SPEED - ENB
 
 // Possible additional motor control pins - TODO: Rename pin definitions 
-#define IN1_PIN 10
-#define IN2_PIN 11
-#define PWM_PIN 6
+#define ARM_OPEN_PIN 10
+#define ARM_CLOSE_PIN 11
+#define ARM_PWM_PIN 6
 
 // Potential pin to connect to button for universal stop all motors
 #define STOP_PIN A6
@@ -36,7 +36,11 @@
 #define OFF LOW
 
 int WHEEL_SPEED = DEFAULT_SPEED;
-int TURN_SPEED = 50;   // May need to be adjusted
+int TURN_SPEED = 75;   // May need to be adjusted
+unsigned long LIGHT_TOGGLE_TIME = 750; // Sets how often to toggle LEDs before first command
+unsigned long lastToggleTime = millis();
+bool instructionReceived = false;
+bool turnedRed = false;
 
 // LED and LCD states
 int LED_R;
@@ -147,6 +151,7 @@ void loop() {
 
     Serial.print("Received instruction: ");
     Serial.println(instruction);
+    instructionReceived = true;
   }
 
 
@@ -174,6 +179,18 @@ void loop() {
   digitalWrite(PROJ_PIN, LOW);
   Serial.print("Time ENDED: ");
   Serial.println(millis() - projTimerStart);
+  }
+
+  // Toggle lights if no commands were received yet
+  if (!instructionReceived)
+  {
+    if (millis() - lastToggleTime >= LIGHT_TOGGLE_TIME)
+    {
+    turnedRed = !turnedRed;
+    lastToggleTime = millis();
+    LED_R = turnedRed ? ON : OFF;
+    LED_B = turnedRed ? OFF : ON;
+    }
   }
 }
 
@@ -353,4 +370,3 @@ void turnHead(char dir)
     setTurnHeadOff();
   }
 }
-

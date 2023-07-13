@@ -36,16 +36,11 @@ class SerialServer(Node):
         self.projector_state = False
 
         # Start up sequence
-        self.turn_off_everything()
         self.red_led_on()
         self.go_forward()
         self.send_string('hl', secs=2)
-        # while (not self.stop_head):
-        #     pass
         self.send_string('hr', secs=2)
         self.send_string('hs')
-        # while (not self.stop_head):
-        #     pass
         self.purple_led_on()
         self.send_string('d')
         call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2idea.wav"])
@@ -186,12 +181,17 @@ class SerialServer(Node):
         self.get_logger().info("Tell projector to turn on button...")
         self.arduino.write(b"p\n")
 
+
 def main(args=None):
     rclpy.init(args=args)
     serial_server = SerialServer()
-    rclpy.spin(serial_server)
-    serial_server.destroy_node()
-    rclpy.shutdown()
+
+    try:
+        rclpy.spin(serial_server)
+    except (KeyboardInterrupt, rclpy.executors.ExternalShutdownException):
+        serial_server.turn_off_everything()
+        serial_server.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
