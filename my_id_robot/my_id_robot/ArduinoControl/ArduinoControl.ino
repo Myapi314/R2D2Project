@@ -37,10 +37,12 @@
 
 int WHEEL_SPEED = DEFAULT_SPEED;
 int TURN_SPEED = 75;   // May need to be adjusted
+int DETECT_DIST = 50;
 unsigned long LIGHT_TOGGLE_TIME = 750; // Sets how often to toggle LEDs before first command
 unsigned long lastToggleTime = millis();
 bool instructionReceived = false;
 bool turnedRed = false;
+bool roamingModeOn = false;
 
 // LED and LCD states
 int LED_R;
@@ -113,11 +115,16 @@ void loop() {
 
     // Based on first char of instruction set the appropriate actions
     switch (instruction[0]) {
+      case 's':
+        // Full stop motors
+        roamingModeOn = false;
+        setAllWheelsOff();
+        setTurnHeadOff();
       case 'm':
         // move wheels
         setMotors(instruction[1]);
         break;
-      case 's':
+      case 'w':
         // speed of wheels
         setWheelSpeed(instruction[1]);
       case 'l':
@@ -142,6 +149,28 @@ void loop() {
           Serial.println("Time Started");
         } 
         break;
+      case 'r':
+        // Start roaming mode, so actively use distance transmitted
+
+        int measuredDistance;
+
+        if (instruction[1] != 's')
+        {
+          measuredDistance = stoi(instruction, 1);
+        }
+        
+        if (roamingModeOn)
+        {
+          roam(measuredDistance);
+        }
+        else if (instruction[1] == 's')
+        {
+          roamingModeOn = true;
+        }
+        else if (measuredDistance < DETECT_DIST)
+        {
+          setMotors("s");
+        }
       case 'q':
         // quit - turn off everything
         resetAll();
@@ -191,6 +220,27 @@ void loop() {
     LED_R = turnedRed ? ON : OFF;
     LED_B = turnedRed ? OFF : ON;
     }
+  }
+}
+
+void roam(int distance = 100)
+{
+  if (distance > DETECT_DIST)
+  {
+    setMotors("f");
+  }
+  else
+  {
+    setMotors("s");
+    delay(1000);
+    setMotors("b");
+    delay(1000);
+
+    char turnDirection = (millis() % 2) ? "l" : "r";
+
+    setMotors(turnDirection);
+    delay(1000);
+    setMotors("f");
   }
 }
 

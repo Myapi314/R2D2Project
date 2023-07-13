@@ -53,7 +53,8 @@ class SerialServer(Node):
             # call(["aplay", "/home/redleader/ros2_ws/src/my_id_robot/my_id_robot/sounds/R2D2-relax.wav"])
         elif msg.data == "stop":
             self.stop()
-            self.send_string('hs')
+        elif msg.data == "roam":
+            self.start_roaming_mode()
         elif msg.data == "right":
             self.go_right()
         elif msg.data == "left":
@@ -93,6 +94,9 @@ class SerialServer(Node):
         else:
             self.stop_head = False
 
+    def start_roaming_mode(self):
+        self.get_logger().info('Starting Roaming mode...')
+        self.arduino.write(b"rs\n")
 
     def turn_off_everything(self):
         self.get_logger().error("Turn off everything!")
@@ -147,7 +151,7 @@ class SerialServer(Node):
 
     def stop(self):
         self.get_logger().info("Tell motors to STOP")
-        self.arduino.write(b"ms\n")
+        self.arduino.write(b"s\n")
         self.receive_msg()
 
     # Control Wheels
@@ -171,11 +175,11 @@ class SerialServer(Node):
 
     def speed_up(self):
         self.get_logger().info("Tell motors to SPEED UP...")
-        self.arduino.write(b"su\n")
+        self.arduino.write(b"wu\n")
 
     def slow_down(self):
         self.get_logger().info("Tell motors to SLOW DOWN...")
-        self.arduino.write(b"sd\n")
+        self.arduino.write(b"wd\n")
 
     def turn_on_proj(self):
         self.get_logger().info("Tell projector to turn on button...")

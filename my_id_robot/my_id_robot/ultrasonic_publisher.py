@@ -23,6 +23,9 @@ class UltrasonicPublisher(Node):
         self.pulse_durr_ = 0
         self.distance_ = 0
 
+        # For keeping track of the mode
+        self.wandering_mode = False
+
         # TESTING
         self.arduino = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         self.arduino.reset_input_buffer()
@@ -56,15 +59,24 @@ class UltrasonicPublisher(Node):
         if distance <= DETECT_DIST:
             # Obstacle detected
             msg.avoid = True
-            self.arduino.write(b"ms\n")
-            # time.sleep(1)
-            # self.arduino.write(b"ml\n")
-            # time.sleep(1.5)
-            # self.arduino.write(b"mf\n")
+            self.arduino.write(b"ms\n") # Stop motors if obstacle is encountered
+
+            if (self.wandering_mode): # If in wandering mode, take control of motors
+                time.sleep(1)
+                self.arduino.write(b"mb\n")
+                time.sleep(1)
+                self.arduino.write(b"ml\n")
+                time.sleep(1)
+                self.arduino.write(b"mf\n")
+
             self.get_logger().info(str(self.distance_) + " cm")
         else:
             msg.avoid = False
         self.publisher_.publish(msg)
+
+
+    def setWandering(self, wanderModeIn):
+        self.wandering_mode = wanderModeIn
 
 
     def setup(self):
