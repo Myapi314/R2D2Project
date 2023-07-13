@@ -64,20 +64,20 @@ class UltrasonicPublisher(Node):
 
             # Tell Arduino how to avoid obstacle
             time.sleep(1)
-            self.arduino.write(b"rb\n")
+            self.arduino.write(b"mrb\n")
             time.sleep(1)
             turnDirection = "r" + str(random.randint(0,1))
             self.arduino.write(turnDirection.encode('utf-8'))
             time.sleep(1)
-            self.arduino.write(b"rf\n")
+            self.arduino.write(b"mrf\n")
 
             self.get_logger().info(str(self.distance_) + " cm")
         else:
             if distance <= (DETECT_DIST * 2):
-                self.arduino.write(b"rn\n")
+                self.arduino.write(b"mrn\n")
             else:
-                self.arduino.write(b"ru\n")
-            self.arduino.write(b"rf\n")
+                self.arduino.write(b"mru\n")
+            self.arduino.write(b"mrf\n")
             msg.avoid = False
         self.publisher_.publish(msg)
 
