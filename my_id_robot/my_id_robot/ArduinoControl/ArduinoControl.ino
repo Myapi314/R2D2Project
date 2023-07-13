@@ -67,6 +67,8 @@ int PROJ_STATE = 0;
 unsigned long PROJ_INTERVAL = 2000;
 unsigned long projTimerStart;
 
+void setWheelSpeed(char dir);
+
 void setup() {
   Serial.begin(9600); //Sets the data rate in bits per second (baud) for serial data transmission
   
@@ -116,13 +118,22 @@ void loop() {
     // Based on first char of instruction set the appropriate actions
     switch (instruction[0]) {
       case 's':
-        // Full stop motors
-        roamingModeOn = false;
-        setAllWheelsOff();
-        setTurnHeadOff();
+        // start up mode
+        Serial.println("START UP MODE");
+        turnOnLED('r', 'h');
+        setMotors('f', '0');
+        delay(500);
+        setMotors('s', '0');
+        turnHead('l');
+        delay(1500);
+        turnHead('r');
+        delay(1500);
+        turnHead('s');
+        turnOnLED('b', 'h');
+        break;
       case 'm':
-        // move wheels
-        setMotors(instruction[1]);
+        // motors
+        setMotors(instruction[1], instruction[2]);
         break;
       case 'w':
         // speed of wheels
@@ -141,37 +152,17 @@ void loop() {
         break;
       case 'p':
         if (instruction[1] == '1') {
-          // Check if projector is off then turn on
+          // Check if projector is off then press button to turn on
           if (!PROJ_STATE){
-            // simulate holding in projector button for 2 sec
-            if (PROJ_BUTTON_STATE == OFF) {
-              PROJ_STATE = 1 - PROJ_STATE;
-              PROJ_BUTTON_STATE = ON;
-              digitalWrite(PROJ_PIN, HIGH);
-              projTimerStart = millis();
-              Serial.println("Time Started");
-            } 
+             handleProjector();
           }
         }
         else if (instruction[1] == '0') {
-          // Check if projector is on, then turn off
+          // Check if projector is on, then press button to turn off
           if (PROJ_STATE){
-            // simulate holding in projector button for 2 sec
-            if (PROJ_BUTTON_STATE == OFF) {
-              PROJ_STATE = 1 - PROJ_STATE;
-              PROJ_BUTTON_STATE = ON;
-              digitalWrite(PROJ_PIN, HIGH);
-              projTimerStart = millis();
-              Serial.println("Time Started");
-            } 
+            handleProjector();
           }
         }
-        
-        
-        break;
-      case 'r':
-        // Start roaming mode
-        roam(instruction[1]);
         break;
       case 'q':
         // quit - turn off everything
@@ -206,10 +197,12 @@ void loop() {
 
   // Turn off Projector pin if it has been on for 2 seconds
   if (millis() - projTimerStart >= PROJ_INTERVAL && PROJ_BUTTON_STATE == ON) {
-  PROJ_BUTTON_STATE = OFF;
-  digitalWrite(PROJ_PIN, LOW);
-  Serial.print("Time ENDED: ");
-  Serial.println(millis() - projTimerStart);
+    PROJ_BUTTON_STATE = OFF;
+    digitalWrite(PROJ_PIN, LOW);
+    Serial.print("Time ENDED: ");
+    Serial.println(millis() - projTimerStart);
+  } else if (PROJ_BUTTON_STATE == ON) {
+    digitalWrite(PROJ_PIN, PROJ_BUTTON_STATE);
   }
 
   // Toggle lights if no commands were received yet
@@ -222,45 +215,6 @@ void loop() {
     LED_R = turnedRed ? ON : OFF;
     LED_B = turnedRed ? OFF : ON;
     }
-  }
-}
-
-void roam(char instruction)
-{
-  if (roamingModeOn)
-  {
-    // Roam
-    switch (instruction) {
-      case 'f':
-        // move wheels
-        setMotors('f');
-        break;
-      case 'b':
-        // move wheels
-        setMotors('b');
-      case '0':
-        // move wheels
-        setMotors('r');
-        break;
-      case '1':
-        // move wheels
-        setMotors('l');
-        break;
-      case 'u':
-        // Speed Up
-        setWheelSpeed('u');
-        break;
-      case 'n':
-        // Slow Down
-        setWheelSpeed('n');
-        break;
-    }
-  }
-  else if (instruction == 's')
-  {
-    // Start Roaming
-    roamingModeOn = true;
-    setMotors("f");
   }
 }
 
@@ -329,13 +283,18 @@ void resetAll()
  *  Sets the state of the wheel motors. 
  *  dir: incoming instruction code
  */
-void setMotors(char dir)
+void setMotors(char dir, char roam_option)
 {
+  if (roamingModeOn) {
+    dir = roam_option;
+    setWheelSpeed(roam_option);
+  }
   setAllWheelsOff();
   switch (dir) {
     case 's':
       // stop
       setAllWheelsOff();
+      roamingModeOn = false;
       break;
     case 'f':
       // go forward
@@ -357,6 +316,12 @@ void setMotors(char dir)
       LEFT_FORWARD = HIGH;      
       RIGHT_BACK = HIGH;
       break;
+    case 'w':
+      // Wander or roam
+      roamingModeOn = true;
+      LEFT_FORWARD = HIGH;
+      RIGHT_FORWARD = HIGH;
+      break;
     default:
       break;
   }
@@ -366,7 +331,7 @@ void setMotors(char dir)
  *  Sets the wheel speed for the motors.
  *  dir: incoming instruction code
  */
-void setWheelSpeed(char dir = 'n')
+void setWheelSpeed(char dir)
 {
   switch(dir) {
     case 'u':
@@ -441,4 +406,16 @@ void turnHead(char dir)
     // default - do not rotate
     setTurnHeadOff();
   }
+}
+
+/*
+ * Simulate holding in projector button for 2 sec
+ */
+void handleProjector() {
+  if (PROJ_BUTTON_STATE == OFF) {
+    PROJ_STATE = 1 - PROJ_STATE;
+    PROJ_BUTTON_STATE = ON;
+    projTimerStart = millis();
+    Serial.println("Time Started");
+  } 
 }
