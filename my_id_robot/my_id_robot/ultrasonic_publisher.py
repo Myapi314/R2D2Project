@@ -53,7 +53,9 @@ class UltrasonicPublisher(Node):
 
 
     def publish_sensor(self, distance):
-        # str(distance) + " cm"
+
+        # Send distance to Arduino
+        self.arduino.write("r" + str(distance) + "\n")
         msg = Sensor()
         msg.pin = RX_PIN
         if distance <= DETECT_DIST:

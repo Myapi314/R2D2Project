@@ -182,7 +182,7 @@ class SerialServer(Node):
         self.arduino.write(b"wd\n")
 
     def turn_on_proj(self):
-        self.get_logger().info("Tell projector to turn on button...")
+        self.get_logger().info("Tell projector to turn on...")
         self.arduino.write(b"p\n")
 
 
