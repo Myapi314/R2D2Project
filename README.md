@@ -108,7 +108,8 @@ Camera, projector, mic, motor drivers
   Unresolved issues with accessing audio and mic properly when launching nodes as root rather than as redleader.
 
 # Future Work
-- Interfacing with camera
+- Interfacing with camera \
+  Utilize OpenCV library already in place and implement face recognition.
 - Use arduino for interrupt based interfacing with sensors \
   This would be one of the first things to work on as the timing from the sensors has been pretty slow.
 - Using Jetson Nano in place of Raspberry Pi
