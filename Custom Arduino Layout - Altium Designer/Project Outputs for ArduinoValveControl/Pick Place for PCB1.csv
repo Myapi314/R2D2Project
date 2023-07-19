@@ -1,0 +1,52 @@
+Altium Designer Pick and Place Locations
+C:\Users\Public\Documents\Altium\ArduinoValveControl\Project Outputs for ArduinoValveControl\Pick Place for PCB1.csv
+
+========================================================================================================================
+File Design Information:
+
+Date:       15/06/23
+Time:       08:36
+Revision:   Not in VersionControl
+Variant:    No variations
+Units used: mil
+
+"Designator","Comment","Layer","Footprint","Center-X(mil)","Center-Y(mil)","Rotation","Description"
+"USB","TSW-104-23-T-S","TopLayer","FP-TSW-104-23-T-S-MFG","2283.465","708.662","270","CONN HEADER VERT 4POS 2.54MM"
+"TX-Yellow","150060YS75000","TopLayer","0603_A","1299.213","669.291","180","SMD mono-color Chip LED, WL-SMCW, Yellow"
+"SW-RST","EVQ-Q2P03W","TopLayer","FP-EVQ-Q2P03W-MFG","1535.434","275.590","270","SWITCH TACTILE SPST-NO 0.02A 15V"
+"RX-Yellow","150060YS75000","TopLayer","0603_A","1299.212","551.181","180","SMD mono-color Chip LED, WL-SMCW, Yellow"
+"RP","Resistor 1K +/-5% 0805 125 mW","TopLayer","RESC0805(2012)_L","236.024","118.110","0","Chip Resistor, 1 kOhms, +/-5%, 125 mW, -55 to 155 degC, 0805"
+"RN4B","Resistor 1K +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","1653.543","1041.339","90","Chip Resistor, 1 kOhms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"RN4A","Resistor 1K +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","1732.284","1045.275","90","Chip Resistor, 1 kOhms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"RN3D","Resistor 22R  +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","2108.267","669.291","180","Chip Resistor, 22 Ohms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"RN3A","Resistor 22R  +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","2104.330","787.402","180","Chip Resistor, 22 Ohms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"RN2D","Resistor 1K +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","1062.992","687.008","90","Chip Resistor, 1 kOhms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"RN2C","Resistor 1K +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","590.551","293.308","270","Chip Resistor, 1 kOhms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"RN1D","Resistor 10K  +/-1 % 0402 63 mW","TopLayer","RESC0402(1005)_L","1631.890","748.032","180","Chip Resistor, 10 kOhms, +/-1 %, 63 mW, -55 to 125 degC, 0402"
+"RN1C","Resistor 10K  +/-1 % 0402 63 mW","TopLayer","RESC0402(1005)_L","2125.984","494.094","90","Chip Resistor, 10 kOhms, +/-1 %, 63 mW, -55 to 125 degC, 0402"
+"R3","CRCW060327R0JNEA","TopLayer","FP-CRCW0603-e3-IPC_B","1968.505","1023.622","90","RES Thick Film, 27O, 5%, 0.1W, 200ppm/°C, 0603"
+"R2","Resistor 1M +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","708.661","253.936","90","Chip Resistor, 1 MOhms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"R1","Resistor 1M +/-5 % 0402 63 mW","TopLayer","RESC0402(1005)_L","1889.764","1045.275","90","Chip Resistor, 1 MOhms, +/-5 %, 63 mW, -55 to 155 degC, 0402"
+"Q2","ATS16ASM-1","TopLayer","CTS-ATS-SM-XTAL-2","905.511","314.960","90","ATS-SM Series Quartz Crystal, 16 MHz, -20 to 70 degC, 11.1 x 4.83 x 4.3mm SMD, RoHS, Tape and Reel"
+"Q1","ATS16ASM-1","TopLayer","CTS-ATS-SM-XTAL-2","2047.244","157.480","0","ATS-SM Series Quartz Crystal, 16 MHz, -20 to 70 degC, 11.1 x 4.83 x 4.3mm SMD, RoHS, Tape and Reel"
+"PWR","22-05-7038","TopLayer","FP-22-05-7038-MFG","78.740","1202.362","90","CONN HEADER R/A 3POS 2.54MM"
+"PWR_LED","HSMG-C170","TopLayer","AVAG-HSMX-C170_V","236.220","314.961","0","Chip LED, Green, 2.2 V, -40 to 85 degC, 2-Pin SMD, Pb-Free, Tape and Reel"
+"SW","A6SN-4101","TopLayer","FP-A6SN-4101-MFG","511.811","748.031","180","RESET-EN"
+"LEGS-IN","TSW-104-23-T-S","TopLayer","FP-TSW-104-23-T-S-MFG","955.512","1496.063","180","CONN HEADER VERT 4POS 2.54MM"
+"LEGS-EN","M20-9990246","TopLayer","FP-M20-9990246-MFG","1299.212","1496.063","180","CONN HEADER VERT 2POS 2.54MM"
+"LED-YG","22-05-7038","TopLayer","FP-22-05-7038-MFG","2007.874","1473.623","0","CONN HEADER R/A 3POS 2.54MM"
+"LED-RB","22-05-7038","TopLayer","FP-22-05-7038-MFG","1653.544","1473.623","0","CONN HEADER R/A 3POS 2.54MM"
+"LCD","TSW-104-23-T-S","TopLayer","FP-TSW-104-23-T-S-MFG","2283.465","1299.212","270","CONN HEADER VERT 4POS 2.54MM"
+"IC2","ATmega328P-AU","TopLayer","32A_M","1141.732","1023.622","270","8-bit AVR Microcontroller, 32KB Flash, 1KB EEPROM, 2KB SRAM, 32-pin TQFP, Industrial Grade (-40°C to 85°C)"
+"IC1","ATmega8U2-MU","TopLayer","32PG_M","1850.394","669.291","270","8-bit AVR Microcontroller, 2.7-5.5V, 8KB Flash, 512 Bytes EEPROM, 512 Bytes SRAM, 32-pin VQFN, Industrial Grade (-40°C to 85°C)"
+"HEAD/ARM-IN","TSW-104-23-T-S","TopLayer","FP-TSW-104-23-T-S-MFG","236.220","1496.063","180","CONN HEADER VERT 4POS 2.54MM"
+"HEAD/ARM-EN","M20-9990246","TopLayer","FP-M20-9990246-MFG","590.552","1496.063","180","CONN HEADER VERT 2POS 2.54MM"
+"C12","Capacitor 22pF +/-10% 50V 0402","TopLayer","CAPC0402(1005)60_L","1124.016","236.220","0","Chip Capacitor, 22pF +/-10%, 50V, 0402, Thickness 0.6 mm"
+"C11","Capacitor 22pF +/-10% 50V 0402","TopLayer","CAPC0402(1005)60_L","1907.481","393.701","0","Chip Capacitor, 22pF +/-10%, 50V, 0402, Thickness 0.6 mm"
+"C10","Capacitor 22pF +/-10% 50V 0402","TopLayer","CAPC0402(1005)60_L","1124.015","314.961","0","Chip Capacitor, 22pF +/-10%, 50V, 0402, Thickness 0.6 mm"
+"C9","Capacitor 22pF +/-10% 50V 0402","TopLayer","CAPC0402(1005)60_L","1811.024","1041.339","90","Chip Capacitor, 22pF +/-10%, 50V, 0402, Thickness 0.6 mm"
+"C8","Capacitor 1uF +/- 10% 16V 0603","TopLayer","CAPC1608X90X35ML15T15","866.142","708.662","0","Chip Capacitor, 1 uF, +/- 10%, 16 V, 0603 (1608 Metric)"
+"C6","Capacitor 100 nF +/-10% 50 V 0805","TopLayer","CAPC2013X95X50LL10T25","1102.362","1338.583","180","Chip Capacitor, 100 nF, +/- 10%, 50 V, 0805 (2012 Metric)"
+"C5","Capacitor 100 nF +/-10% 50 V 0805","TopLayer","CAPC2013X95X50LL10T25","1614.174","579.725","270","Chip Capacitor, 100 nF, +/- 10%, 50 V, 0805 (2012 Metric)"
+"C4","Capacitor 100 nF +/-10% 50 V 0805","TopLayer","CAPC2013X95X50LL10T25","354.330","1181.102","0","Chip Capacitor, 100 nF, +/- 10%, 50 V, 0805 (2012 Metric)"
+"ADC 6/7","M20-9990246","TopLayer","FP-M20-9990246-MFG","78.740","748.032","270","CONN HEADER VERT 2POS 2.54MM"

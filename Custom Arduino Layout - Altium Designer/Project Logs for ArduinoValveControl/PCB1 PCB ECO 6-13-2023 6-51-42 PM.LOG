@@ -1,0 +1,50 @@
+Removed Pin From Net: NetName=UGND Pin=GROUND--3
+Removed Pin From Net: NetName=GND Pin=GROUND--6
+Removed Pin From Net: NetName=NetC5_1 Pin=RESET-EN--1
+Removed Pin From Net: NetName=RESET Pin=RESET-EN--8
+Removed Pin From Net: NetName=NetC5_2 Pin=UBOOT--2
+Removed Pin From Net: NetName=GND Pin=UBOOT--7
+Removed Member From Class: ClassName=ArduinoCustomSchematic Member=GROUND-
+Removed Member From Class: ClassName=ArduinoCustomSchematic Member=RESET-EN-
+Removed Member From Class: ClassName=ArduinoCustomSchematic Member=UBOOT-
+Change Component Designator: OldDesignator=IC3 NewDesignator=IC2
+Change Component Designator: OldDesignator=POWER- NewDesignator=SW
+Change Component Description : Designator=SW Old Description=SWITCH SLIDE DIP SPST 25MA 24V New Description=RESET-EN
+Add Pin To Net: Unknown Pin: Pin HEAD/ARM-EN-ENA
+Add Pin To Net: Unknown Pin: Pin HEAD/ARM-EN-ENB
+Add Pin To Net: Unknown Pin: Pin HEAD/ARM-IN-IN1
+Add Pin To Net: Unknown Pin: Pin HEAD/ARM-IN-IN2
+Add Pin To Net: Unknown Pin: Pin HEAD/ARM-IN-IN3
+Add Pin To Net: Unknown Pin: Pin HEAD/ARM-IN-IN4
+Add Pin To Net: Unknown Pin: Pin LCD-GND
+Add Pin To Net: Unknown Pin: Pin LED-RB-GND
+Add Pin To Net: Unknown Pin: Pin LED-YG-GND
+Add Pin To Net: Unknown Pin: Pin LEGS-EN-ENA
+Add Pin To Net: Unknown Pin: Pin LEGS-EN-ENB
+Add Pin To Net: Unknown Pin: Pin LEGS-IN-IN1
+Add Pin To Net: Unknown Pin: Pin LEGS-IN-IN2
+Add Pin To Net: Unknown Pin: Pin LEGS-IN-IN3
+Add Pin To Net: Unknown Pin: Pin LEGS-IN-IN4
+Add Pin To Net: Unknown Pin: Pin PWR-GND
+Added Pin To Net: NetName=NetC5_1 Pin=SW-1
+Added Pin To Net: NetName=NetC5_2 Pin=SW-2
+Added Pin To Net: NetName=UGND Pin=SW-3
+Added Pin To Net: NetName=GND Pin=SW-6
+Added Pin To Net: NetName=GND Pin=SW-7
+Added Pin To Net: NetName=RESET Pin=SW-8
+Add Pin To Net: Unknown Pin: Pin USB-D+
+Add Pin To Net: Unknown Pin: Pin USB-D-
+Add Pin To Net: Unknown Pin: Pin USB-GND
+Add Pin To Net: Unknown Pin: Pin USB-UVCC
+Added Pin To Net: NetName=NetIC2_23 Pin=IC2-23
+Added Net: Name=NetIC2_23
+Added Pin To Net: NetName=NetIC2_24 Pin=IC2-24
+Added Net: Name=NetIC2_24
+Added Pin To Net: NetName=NetIC2_25 Pin=IC2-25
+Added Net: Name=NetIC2_25
+Added Pin To Net: NetName=NetIC2_26 Pin=IC2-26
+Added Net: Name=NetIC2_26
+Added Pin To Net: NetName=NetIC2_27 Pin=IC2-27
+Added Net: Name=NetIC2_27
+Added Pin To Net: NetName=NetPWR_+5V-IN Pin=SW-5
+Added Net: Name=NetPWR_+5V-IN

@@ -1,0 +1,916 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD23\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">6/14/2023</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">5:38:03 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc" class="file"><acronym title="C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc">C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">188</td></tr>
+</table>
+</td>
+</table><a name="IDXNETJUHLE11KZT4ZTYQDADUQKD3KMFF5Y0CCYBRLE3HDQRVZ2NG"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDIE423H3UV2QWLMGW3DKYAITXW2SFLIUOFIM5REDV2JFS55CVOQB">Clearance Constraint (Gap=0.2mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDQWEE44YBKJWNKDQKUG5BEG3MPFFYP40YSJDNSINIGP5JBWHL1ZNC">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDWT4BP1LGGE1WHR21YJB5EE4W0ODAKL0GTQJ0Z3HV0KVLJWLABXPI">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDEOGHOKZAGMIXDUXAPAJCRR2UJOUDIP1KXNJENWN332EWRXZLHO0I">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDUDZUEWM0XWKQNUBRL40NXOETZED5HNLHUY5NINJEVAGGD3QJKNZN">Width Constraint (Min=0.2mm) (Max=0.3mm) (Preferred=0.2mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDO2QOUT4VVPN0IUNTTVF1F33FIGIL40KE2YJ0X4EKLRBGCM4ZI32F">SMD Neck-Down Constraint (Percent=50%) (All)</a></td>
+<td class="column2">16</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDZUG1ZE3ECF4MDWGWOATBMN1R4I0VUEK5K2BFYONGZTJ0GZCJI1XN">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDPEIBUGJJSYS0II5GFPSO5UA0WFRNQ2L0SNYC1VBJWVXEHVSBJS3M">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDUGHYPZ2FB0FDE22LCDGYDRLQEHHLQUQQYIMUNSLD2FBUKQSCQGGD">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDPO2KA5AQJBOHHIJ4WWTYHCSTIK20ERCPRFJGY2GDDQKB452FWPLO">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">99</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3K1J15VMGFKQGBFQ21UO45HRHNSGKIRA5ZT0MMNVM2LPXCDBYLSP">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">53</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID3LYLE32UPGYWOK0JRBL53UKICBSKERHSCNZERFBVV2YHF51IYRPI">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">18</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDDZKF4JT3Z5FNL3GZHI5YM1FRZPLS43QSTJ05AZKOPAIAJPI0L2JE">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDVA5G1ZB53ULOIVQ1A0SQ2NZ1ZKYPU5RHMQF2WKNK1TEQ5MBAMWMF">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">188</td>
+</tr>
+</table><br><a name="IDO2QOUT4VVPN0IUNTTVF1F33FIGIL40KE2YJ0X4EKLRBGCM4ZI32F"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">SMD Neck-Down Constraint (Percent=50%) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.855mil|Location2.X=2970.665mil|Location1.Y=1764.232mil|Location2.Y=1785.303mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.855mil|Location2.X=2970.665mil|Location1.Y=1764.232mil|Location2.Y=1785.303mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-1(48.75mm,19.575mm) on Top Layer And Track (48.75mm,19.575mm)(48.75mm,19.9mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1712.066mil|Location2.Y=1733.137mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1712.066mil|Location2.Y=1733.137mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-10(44.425mm,18.25mm) on Top Layer And Track (37.466mm,18.25mm)(44.425mm,18.25mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1692.38mil|Location2.Y=1713.451mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1692.38mil|Location2.Y=1713.451mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-11(44.425mm,17.75mm) on Top Layer And Track (39.475mm,17.75mm)(44.425mm,17.75mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1653.01mil|Location2.Y=1674.081mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1653.01mil|Location2.Y=1674.081mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-13(44.425mm,16.75mm) on Top Layer And Track (43.899mm,16.75mm)(44.425mm,16.75mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2888.169mil|Location2.X=2950.979mil|Location1.Y=1777.028mil|Location2.Y=1798.098mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2888.169mil|Location2.X=2950.979mil|Location1.Y=1777.028mil|Location2.Y=1798.098mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-2(48.25mm,19.575mm) on Top Layer And Track (48.25mm,19.575mm)(48.25mm,22.8mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.855mil|Location2.X=2970.665mil|Location1.Y=1561.476mil|Location2.Y=1582.547mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.855mil|Location2.X=2970.665mil|Location1.Y=1561.476mil|Location2.Y=1582.547mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-24(48.75mm,14.425mm) on Top Layer And Track (48.75mm,14.1mm)(48.75mm,14.425mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1633.326mil|Location2.Y=1654.397mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1633.326mil|Location2.Y=1654.397mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-27(49.575mm,16.25mm) on Top Layer And Track (49.575mm,16.25mm)(51.169mm,16.25mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1653.01mil|Location2.Y=1674.081mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1653.01mil|Location2.Y=1674.081mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-28(49.575mm,16.75mm) on Top Layer And Track (49.575mm,16.75mm)(51.234mm,16.75mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1672.696mil|Location2.Y=1693.767mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1672.696mil|Location2.Y=1693.767mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-29(49.575mm,17.25mm) on Top Layer And Track (49.575mm,17.25mm)(51.3mm,17.25mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2868.483mil|Location2.X=2931.293mil|Location1.Y=1751.437mil|Location2.Y=1772.508mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2868.483mil|Location2.X=2931.293mil|Location1.Y=1751.437mil|Location2.Y=1772.508mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-3(47.75mm,19.575mm) on Top Layer And Track (47.75mm,17.75mm)(47.75mm,19.575mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1692.38mil|Location2.Y=1713.451mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1692.38mil|Location2.Y=1713.451mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-30(49.575mm,17.75mm) on Top Layer And Track (49.575mm,17.75mm)(50.775mm,17.75mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1712.066mil|Location2.Y=1733.137mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2953.13mil|Location2.X=3015.941mil|Location1.Y=1712.066mil|Location2.Y=1733.137mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-31(49.575mm,18.25mm) on Top Layer And Track (49.575mm,18.25mm)(50.337mm,18.25mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2940.335mil|Location2.X=3003.145mil|Location1.Y=1731.752mil|Location2.Y=1752.823mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2940.335mil|Location2.X=3003.145mil|Location1.Y=1731.752mil|Location2.Y=1752.823mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-32(49.575mm,18.75mm) on Top Layer And Track (49.575mm,18.75mm)(49.9mm,18.75mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2848.799mil|Location2.X=2911.609mil|Location1.Y=1777.028mil|Location2.Y=1798.098mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2848.799mil|Location2.X=2911.609mil|Location1.Y=1777.028mil|Location2.Y=1798.098mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-4(47.25mm,19.575mm) on Top Layer And Track (47.25mm,19.575mm)(47.25mm,22.633mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2770.059mil|Location2.X=2832.869mil|Location1.Y=1777.028mil|Location2.Y=1798.098mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2770.059mil|Location2.X=2832.869mil|Location1.Y=1777.028mil|Location2.Y=1798.098mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-8(45.25mm,19.575mm) on Top Layer And Track (45.25mm,19.575mm)(45.25mm,20.534mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1731.752mil|Location2.Y=1752.823mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.783mil|Location2.X=2787.594mil|Location1.Y=1731.752mil|Location2.Y=1752.823mil|Absolute=True">SMD Neck-Down Constraint: Between Pad IC1-9(44.425mm,18.75mm) on Top Layer And Track (43.598mm,18.75mm)(44.425mm,18.75mm) on Top Layer Relative Track Width: 100.00%</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDUGHYPZ2FB0FDE22LCDGYDRLQEHHLQUQQYIMUNSLD2FBUKQSCQGGD"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2841.56mil|Location2.X=2849.227mil|Location1.Y=1665.458mil|Location2.Y=1673.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2841.56mil|Location2.X=2849.227mil|Location1.Y=1665.458mil|Location2.Y=1673.125mil|Absolute=True">Hole To Hole Clearance Constraint: (Collision &lt; 0.254mm) Between Via (47mm,17mm) from Top Layer to Bottom Layer And Via (47mm,17mm) from Top Layer to Bottom Layer Pad/Via Touching Holes</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDPO2KA5AQJBOHHIJ4WWTYHCSTIK20ERCPRFJGY2GDDQKB452FWPLO"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2113.39mil|Location2.X=2124.64mil|Location1.Y=1317.702mil|Location2.Y=1328.952mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2113.39mil|Location2.X=2124.64mil|Location1.Y=1317.702mil|Location2.Y=1328.952mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C10-1(28.1mm,8mm) on Top Layer And Pad C10-2(29mm,8mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2896.856mil|Location2.X=2908.106mil|Location1.Y=1396.442mil|Location2.Y=1407.692mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2896.856mil|Location2.X=2908.106mil|Location1.Y=1396.442mil|Location2.Y=1407.692mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C11-1(48mm,10mm) on Top Layer And Pad C11-2(48.9mm,10mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2864.375mil|Location2.X=2875.625mil|Location1.Y=1388.076mil|Location2.Y=1399.326mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2864.375mil|Location2.X=2875.625mil|Location1.Y=1388.076mil|Location2.Y=1399.326mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad C11-1(48mm,10mm) on Top Layer And Via (47mm,10mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2113.391mil|Location2.X=2124.641mil|Location1.Y=1238.962mil|Location2.Y=1250.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2113.391mil|Location2.X=2124.641mil|Location1.Y=1238.962mil|Location2.Y=1250.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C12-1(28.1mm,6mm) on Top Layer And Pad C12-2(29mm,6mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1343.705mil|Location2.X=1354.955mil|Location1.Y=2145.887mil|Location2.Y=2157.137mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1343.705mil|Location2.X=1354.955mil|Location1.Y=2145.887mil|Location2.Y=2157.137mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C4-1(8.275mm,30mm) on Top Layer And Pad C4-2(9.725mm,30mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.959mil|Location2.X=2585.209mil|Location1.Y=1574.1mil|Location2.Y=1585.35mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.959mil|Location2.X=2585.209mil|Location1.Y=1574.1mil|Location2.Y=1585.35mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C5-1(41mm,15.45mm) on Top Layer And Pad C5-2(41mm,14mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2091.737mil|Location2.X=2102.987mil|Location1.Y=2362.549mil|Location2.Y=2373.799mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2091.737mil|Location2.X=2102.987mil|Location1.Y=2362.549mil|Location2.Y=2373.799mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C6-1(28.725mm,34mm) on Top Layer And Pad C6-2(27.275mm,34mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2146.655mil|Location2.X=2157.905mil|Location1.Y=2302.715mil|Location2.Y=2316.114mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2146.655mil|Location2.X=2157.905mil|Location1.Y=2302.715mil|Location2.Y=2316.114mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.093mm &lt; 0.254mm) Between Pad C6-1(28.725mm,34mm) on Top Layer And Via (30mm,33mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.093mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2037.603mil|Location2.X=2048.853mil|Location1.Y=2332.958mil|Location2.Y=2344.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2037.603mil|Location2.X=2048.853mil|Location1.Y=2332.958mil|Location2.Y=2344.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad C6-2(27.275mm,34mm) on Top Layer And Via (26mm,34mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1855.517mil|Location2.X=1866.767mil|Location1.Y=1677.383mil|Location2.Y=1688.633mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1855.517mil|Location2.X=1866.767mil|Location1.Y=1677.383mil|Location2.Y=1688.633mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.247mm &lt; 0.254mm) Between Pad C8-1(21.275mm,18mm) on Top Layer And Pad C8-2(22.725mm,18mm) on Top Layer [Top Solder] Mask Sliver [0.247mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2792.032mil|Location2.X=2803.282mil|Location1.Y=2035.714mil|Location2.Y=2046.964mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2792.032mil|Location2.X=2803.282mil|Location1.Y=2035.714mil|Location2.Y=2046.964mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C9-1(46mm,26mm) on Top Layer And Pad C9-2(46mm,26.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2898.824mil|Location2.X=2910.074mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2898.824mil|Location2.X=2910.074mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-1(48.75mm,19.575mm) on Top Layer And Pad IC1-2(48.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2908.667mil|Location2.X=2919.917mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2908.667mil|Location2.X=2919.917mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-1(48.75mm,19.575mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1703.035mil|Location2.Y=1714.285mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1703.035mil|Location2.Y=1714.285mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-10(44.425mm,18.25mm) on Top Layer And Pad IC1-11(44.425mm,17.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1712.878mil|Location2.Y=1724.128mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1712.878mil|Location2.Y=1724.128mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-10(44.425mm,18.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1722.721mil|Location2.Y=1733.971mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1722.721mil|Location2.Y=1733.971mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-10(44.425mm,18.25mm) on Top Layer And Pad IC1-9(44.425mm,18.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1683.35mil|Location2.Y=1694.6mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1683.35mil|Location2.Y=1694.6mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-11(44.425mm,17.75mm) on Top Layer And Pad IC1-12(44.425mm,17.25mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1693.192mil|Location2.Y=1704.442mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1693.192mil|Location2.Y=1704.442mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-11(44.425mm,17.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1663.665mil|Location2.Y=1674.915mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1663.665mil|Location2.Y=1674.915mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-12(44.425mm,17.25mm) on Top Layer And Pad IC1-13(44.425mm,16.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1673.508mil|Location2.Y=1684.758mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1673.508mil|Location2.Y=1684.758mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-12(44.425mm,17.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1643.98mil|Location2.Y=1655.23mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1643.98mil|Location2.Y=1655.23mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-13(44.425mm,16.75mm) on Top Layer And Pad IC1-14(44.425mm,16.25mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1653.822mil|Location2.Y=1665.072mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1653.822mil|Location2.Y=1665.072mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-13(44.425mm,16.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1624.295mil|Location2.Y=1635.545mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1624.295mil|Location2.Y=1635.545mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-14(44.425mm,16.25mm) on Top Layer And Pad IC1-15(44.425mm,15.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1634.138mil|Location2.Y=1645.388mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1634.138mil|Location2.Y=1645.388mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-14(44.425mm,16.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1604.61mil|Location2.Y=1615.86mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2725.595mil|Location2.X=2736.845mil|Location1.Y=1604.61mil|Location2.Y=1615.86mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-15(44.425mm,15.75mm) on Top Layer And Pad IC1-16(44.425mm,15.25mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1614.452mil|Location2.Y=1625.702mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1614.452mil|Location2.Y=1625.702mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-15(44.425mm,15.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1594.768mil|Location2.Y=1606.018mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1594.768mil|Location2.Y=1606.018mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-16(44.425mm,15.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2780.713mil|Location2.X=2791.963mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2780.713mil|Location2.X=2791.963mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-17(45.25mm,14.425mm) on Top Layer And Pad IC1-18(45.75mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2770.871mil|Location2.X=2782.121mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2770.871mil|Location2.X=2782.121mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-17(45.25mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2800.398mil|Location2.X=2811.648mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2800.398mil|Location2.X=2811.648mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-18(45.75mm,14.425mm) on Top Layer And Pad IC1-19(46.25mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2790.555mil|Location2.X=2801.805mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2790.555mil|Location2.X=2801.805mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-18(45.75mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.083mil|Location2.X=2831.333mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.083mil|Location2.X=2831.333mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-19(46.25mm,14.425mm) on Top Layer And Pad IC1-20(46.75mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.241mil|Location2.X=2821.491mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.241mil|Location2.X=2821.491mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-19(46.25mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2879.138mil|Location2.X=2890.388mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2879.138mil|Location2.X=2890.388mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-2(48.25mm,19.575mm) on Top Layer And Pad IC1-3(47.75mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2888.981mil|Location2.X=2900.231mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2888.981mil|Location2.X=2900.231mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-2(48.25mm,19.575mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.768mil|Location2.X=2851.018mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.768mil|Location2.X=2851.018mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-20(46.75mm,14.425mm) on Top Layer And Pad IC1-21(47.25mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2829.925mil|Location2.X=2841.175mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2829.925mil|Location2.X=2841.175mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-20(46.75mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2859.453mil|Location2.X=2870.703mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2859.453mil|Location2.X=2870.703mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-21(47.25mm,14.425mm) on Top Layer And Pad IC1-22(47.75mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2849.611mil|Location2.X=2860.861mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2849.611mil|Location2.X=2860.861mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-21(47.25mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2879.138mil|Location2.X=2890.388mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2879.138mil|Location2.X=2890.388mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-22(47.75mm,14.425mm) on Top Layer And Pad IC1-23(48.25mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.295mil|Location2.X=2880.545mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.295mil|Location2.X=2880.545mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-22(47.75mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2898.824mil|Location2.X=2910.074mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2898.824mil|Location2.X=2910.074mil|Location1.Y=1549.493mil|Location2.Y=1560.743mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-23(48.25mm,14.425mm) on Top Layer And Pad IC1-24(48.75mm,14.425mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2888.981mil|Location2.X=2900.231mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2888.981mil|Location2.X=2900.231mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-23(48.25mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2908.667mil|Location2.X=2919.917mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2908.667mil|Location2.X=2919.917mil|Location1.Y=1584.926mil|Location2.Y=1596.176mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-24(48.75mm,14.425mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1604.61mil|Location2.Y=1615.86mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1604.61mil|Location2.Y=1615.86mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-25(49.575mm,15.25mm) on Top Layer And Pad IC1-26(49.575mm,15.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1594.768mil|Location2.Y=1606.018mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1594.768mil|Location2.Y=1606.018mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-25(49.575mm,15.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1624.295mil|Location2.Y=1635.545mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1624.295mil|Location2.Y=1635.545mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-26(49.575mm,15.75mm) on Top Layer And Pad IC1-27(49.575mm,16.25mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1614.452mil|Location2.Y=1625.702mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1614.452mil|Location2.Y=1625.702mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-26(49.575mm,15.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1643.98mil|Location2.Y=1655.23mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1643.98mil|Location2.Y=1655.23mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-27(49.575mm,16.25mm) on Top Layer And Pad IC1-28(49.575mm,16.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1634.138mil|Location2.Y=1645.388mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1634.138mil|Location2.Y=1645.388mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-27(49.575mm,16.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1663.665mil|Location2.Y=1674.915mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1663.665mil|Location2.Y=1674.915mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-28(49.575mm,16.75mm) on Top Layer And Pad IC1-29(49.575mm,17.25mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1653.822mil|Location2.Y=1665.072mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1653.822mil|Location2.Y=1665.072mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-28(49.575mm,16.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1683.35mil|Location2.Y=1694.6mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1683.35mil|Location2.Y=1694.6mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-29(49.575mm,17.25mm) on Top Layer And Pad IC1-30(49.575mm,17.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1673.508mil|Location2.Y=1684.758mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1673.508mil|Location2.Y=1684.758mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-29(49.575mm,17.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.295mil|Location2.X=2880.545mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.295mil|Location2.X=2880.545mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-3(47.75mm,19.575mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2859.453mil|Location2.X=2870.703mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2859.453mil|Location2.X=2870.703mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-3(47.75mm,19.575mm) on Top Layer And Pad IC1-4(47.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1703.035mil|Location2.Y=1714.285mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1703.035mil|Location2.Y=1714.285mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-30(49.575mm,17.75mm) on Top Layer And Pad IC1-31(49.575mm,18.25mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1693.192mil|Location2.Y=1704.442mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1693.192mil|Location2.Y=1704.442mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-30(49.575mm,17.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1722.721mil|Location2.Y=1733.971mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2928.351mil|Location2.X=2939.601mil|Location1.Y=1722.721mil|Location2.Y=1733.971mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-31(49.575mm,18.25mm) on Top Layer And Pad IC1-32(49.575mm,18.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1712.878mil|Location2.Y=1724.128mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1712.878mil|Location2.Y=1724.128mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-31(49.575mm,18.25mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1732.564mil|Location2.Y=1743.814mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2918.509mil|Location2.X=2929.759mil|Location1.Y=1732.564mil|Location2.Y=1743.814mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-32(49.575mm,18.75mm) on Top Layer And Pad IC1-33(47mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2849.611mil|Location2.X=2860.861mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2849.611mil|Location2.X=2860.861mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-33(47mm,17mm) on Top Layer And Pad IC1-4(47.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2829.925mil|Location2.X=2841.175mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2829.925mil|Location2.X=2841.175mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-33(47mm,17mm) on Top Layer And Pad IC1-5(46.75mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.241mil|Location2.X=2821.491mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.241mil|Location2.X=2821.491mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-33(47mm,17mm) on Top Layer And Pad IC1-6(46.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2790.555mil|Location2.X=2801.805mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2790.555mil|Location2.X=2801.805mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-33(47mm,17mm) on Top Layer And Pad IC1-7(45.75mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2770.871mil|Location2.X=2782.121mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2770.871mil|Location2.X=2782.121mil|Location1.Y=1742.406mil|Location2.Y=1753.656mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-33(47mm,17mm) on Top Layer And Pad IC1-8(45.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1732.564mil|Location2.Y=1743.814mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2761.028mil|Location2.X=2772.278mil|Location1.Y=1732.564mil|Location2.Y=1743.814mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-33(47mm,17mm) on Top Layer And Pad IC1-9(44.425mm,18.75mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.768mil|Location2.X=2851.018mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.768mil|Location2.X=2851.018mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-4(47.25mm,19.575mm) on Top Layer And Pad IC1-5(46.75mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.083mil|Location2.X=2831.333mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.083mil|Location2.X=2831.333mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-5(46.75mm,19.575mm) on Top Layer And Pad IC1-6(46.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2800.398mil|Location2.X=2811.648mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2800.398mil|Location2.X=2811.648mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-6(46.25mm,19.575mm) on Top Layer And Pad IC1-7(45.75mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2780.713mil|Location2.X=2791.963mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2780.713mil|Location2.X=2791.963mil|Location1.Y=1752.249mil|Location2.Y=1763.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad IC1-7(45.75mm,19.575mm) on Top Layer And Pad IC1-8(45.25mm,19.575mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2178.352mil|Location2.X=2189.602mil|Location1.Y=1806.875mil|Location2.Y=1818.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2178.352mil|Location2.X=2189.602mil|Location1.Y=1806.875mil|Location2.Y=1818.125mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.072mm &lt; 0.254mm) Between Pad IC2-22(30.2mm,21.75mm) on Top Layer And Via (30.2mm,20mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.072mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2017.655mil|Location2.X=2028.905mil|Location1.Y=2229.186mil|Location2.Y=2240.436mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2017.655mil|Location2.X=2028.905mil|Location1.Y=2229.186mil|Location2.Y=2240.436mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.09mm &lt; 0.254mm) Between Pad IC2-8(26.2mm,30.25mm) on Top Layer And Via (26mm,32mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.09mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.773mil|Location2.X=2882.023mil|Location1.Y=2039.65mil|Location2.Y=2050.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.773mil|Location2.X=2882.023mil|Location1.Y=2039.65mil|Location2.Y=2050.9mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad R1-1(48mm,26.1mm) on Top Layer And Pad R1-2(48mm,27mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2864.377mil|Location2.X=2875.627mil|Location1.Y=2071.399mil|Location2.Y=2082.649mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2864.377mil|Location2.X=2875.627mil|Location1.Y=2071.399mil|Location2.Y=2082.649mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.14mm &lt; 0.254mm) Between Pad R1-2(48mm,27mm) on Top Layer And Via (47.159mm,27.841mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.14mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1689.67mil|Location2.X=1700.92mil|Location1.Y=1248.312mil|Location2.Y=1259.562mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1689.67mil|Location2.X=1700.92mil|Location1.Y=1248.312mil|Location2.Y=1259.562mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad R2-1(18mm,6mm) on Top Layer And Pad R2-2(18mm,6.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.993mil|Location2.X=3118.243mil|Location1.Y=1488.469mil|Location2.Y=1499.719mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.993mil|Location2.X=3118.243mil|Location1.Y=1488.469mil|Location2.Y=1499.719mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN1C-1(54mm,12.1mm) on Top Layer And Pad RN1C-2(54mm,13mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2621.265mil|Location2.X=2632.515mil|Location1.Y=1734.041mil|Location2.Y=1745.291mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2621.265mil|Location2.X=2632.515mil|Location1.Y=1734.041mil|Location2.Y=1745.291mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN1D-1(41.9mm,19mm) on Top Layer And Pad RN1D-2(41mm,19mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.314mil|Location2.X=2668.564mil|Location1.Y=1744.374mil|Location2.Y=1755.624mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.314mil|Location2.X=2668.564mil|Location1.Y=1744.374mil|Location2.Y=1755.624mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.228mm &lt; 0.254mm) Between Pad RN1D-1(41.9mm,19mm) on Top Layer And Via (43.081mm,19.05mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.228mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1588.292mil|Location2.X=1599.542mil|Location1.Y=1287.683mil|Location2.Y=1298.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1588.292mil|Location2.X=1599.542mil|Location1.Y=1287.683mil|Location2.Y=1298.933mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN2C-1(15mm,7.9mm) on Top Layer And Pad RN2C-2(15mm,7mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1579.926mil|Location2.X=1591.176mil|Location1.Y=1322.131mil|Location2.Y=1333.381mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1579.926mil|Location2.X=1591.176mil|Location1.Y=1322.131mil|Location2.Y=1333.381mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.147mm &lt; 0.254mm) Between Pad RN2C-1(15mm,7.9mm) on Top Layer And Via (15mm,9mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.147mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.001mil|Location2.X=2055.251mil|Location1.Y=1681.383mil|Location2.Y=1692.633mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.001mil|Location2.X=2055.251mil|Location1.Y=1681.383mil|Location2.Y=1692.633mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN2D-1(27mm,17mm) on Top Layer And Pad RN2D-2(27mm,17.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3093.705mil|Location2.X=3104.955mil|Location1.Y=1773.41mil|Location2.Y=1784.66mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3093.705mil|Location2.X=3104.955mil|Location1.Y=1773.41mil|Location2.Y=1784.66mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN3A-1(53.9mm,20mm) on Top Layer And Pad RN3A-2(53mm,20mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3097.642mil|Location2.X=3108.892mil|Location1.Y=1655.3mil|Location2.Y=1666.55mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3097.642mil|Location2.X=3108.892mil|Location1.Y=1655.3mil|Location2.Y=1666.55mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN3D-1(54mm,17mm) on Top Layer And Pad RN3D-2(53.1mm,17mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3130.123mil|Location2.X=3141.373mil|Location1.Y=1663.666mil|Location2.Y=1674.916mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3130.123mil|Location2.X=3141.373mil|Location1.Y=1663.666mil|Location2.Y=1674.916mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad RN3D-1(54mm,17mm) on Top Layer And Via (55mm,17mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2713.292mil|Location2.X=2724.542mil|Location1.Y=2039.65mil|Location2.Y=2050.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2713.292mil|Location2.X=2724.542mil|Location1.Y=2039.65mil|Location2.Y=2050.9mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN4A-1(44mm,26.1mm) on Top Layer And Pad RN4A-2(44mm,27mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2634.552mil|Location2.X=2645.802mil|Location1.Y=2035.714mil|Location2.Y=2046.964mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2634.552mil|Location2.X=2645.802mil|Location1.Y=2035.714mil|Location2.Y=2046.964mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad RN4B-1(42mm,26mm) on Top Layer And Pad RN4B-2(42mm,26.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1636.674mil|Location2.X=1647.924mil|Location1.Y=1815.996mil|Location2.Y=1827.246mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1636.674mil|Location2.X=1647.924mil|Location1.Y=1815.996mil|Location2.Y=1827.246mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.098mm &lt; 0.254mm) Between Pad SW-3(17.125mm,20.27mm) on Top Layer And Via (16.441mm,21.52mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.098mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1636.674mil|Location2.X=1647.924mil|Location1.Y=1868.028mil|Location2.Y=1879.278mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1636.674mil|Location2.X=1647.924mil|Location1.Y=1868.028mil|Location2.Y=1879.278mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.138mm &lt; 0.254mm) Between Pad SW-4(17.125mm,22.81mm) on Top Layer And Via (16.441mm,21.52mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.138mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1710.396mil|Location2.X=1721.646mil|Location1.Y=1869.295mil|Location2.Y=1882.873mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1710.396mil|Location2.X=1721.646mil|Location1.Y=1869.295mil|Location2.Y=1882.873mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.24mm &lt; 0.254mm) Between Pad SW-4(17.125mm,22.81mm) on Top Layer And Via (19mm,22mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.24mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2073.345mil|Location2.X=2084.595mil|Location1.Y=1563.948mil|Location2.Y=1575.198mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2073.345mil|Location2.X=2084.595mil|Location1.Y=1563.948mil|Location2.Y=1575.198mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.214mm &lt; 0.254mm) Between Via (27mm,14mm) from Top Layer to Bottom Layer And Via (28.066mm,14.934mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.214mm] / [Bottom Solder] Mask Sliver [0.214mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2194.1mil|Location2.X=2205.68mil|Location1.Y=1762.091mil|Location2.Y=1773.341mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2194.1mil|Location2.X=2205.68mil|Location1.Y=1762.091mil|Location2.Y=1773.341mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.077mm &lt; 0.254mm) Between Via (30.2mm,20mm) from Top Layer to Bottom Layer And Via (31mm,19mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.077mm] / [Bottom Solder] Mask Sliver [0.077mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2229.532mil|Location2.X=2240.782mil|Location1.Y=1329.021mil|Location2.Y=1340.271mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2229.532mil|Location2.X=2240.782mil|Location1.Y=1329.021mil|Location2.Y=1340.271mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.211mm &lt; 0.254mm) Between Via (31mm,8mm) from Top Layer to Bottom Layer And Via (32mm,9mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.211mm] / [Bottom Solder] Mask Sliver [0.211mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2425.336mil|Location2.X=2436.586mil|Location1.Y=1879.155mil|Location2.Y=1890.405mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2425.336mil|Location2.X=2436.586mil|Location1.Y=1879.155mil|Location2.Y=1890.405mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.213mm &lt; 0.254mm) Between Via (36.947mm,21.947mm) from Top Layer to Bottom Layer And Via (36mm,23mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.213mm] / [Bottom Solder] Mask Sliver [0.213mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2463.66mil|Location2.X=2474.91mil|Location1.Y=1838.738mil|Location2.Y=1849.988mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2463.66mil|Location2.X=2474.91mil|Location1.Y=1838.738mil|Location2.Y=1849.988mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.211mm &lt; 0.254mm) Between Via (36.947mm,21.947mm) from Top Layer to Bottom Layer And Via (37.947mm,20.947mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.211mm] / [Bottom Solder] Mask Sliver [0.211mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2813.193mil|Location2.X=2824.443mil|Location1.Y=1663.666mil|Location2.Y=1674.916mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2813.193mil|Location2.X=2824.443mil|Location1.Y=1663.666mil|Location2.Y=1674.916mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.147mm &lt; 0.254mm) Between Via (45.9mm,17mm) from Top Layer to Bottom Layer And Via (47mm,17mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.147mm] / [Bottom Solder] Mask Sliver [0.147mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.769mil|Location2.X=2851.019mil|Location1.Y=1637.091mil|Location2.Y=1648.341mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.769mil|Location2.X=2851.019mil|Location1.Y=1637.091mil|Location2.Y=1648.341mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.147mm &lt; 0.254mm) Between Via (47mm,15.9mm) from Top Layer to Bottom Layer And Via (47mm,17mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.147mm] / [Bottom Solder] Mask Sliver [0.147mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.769mil|Location2.X=2851.019mil|Location1.Y=1690.241mil|Location2.Y=1701.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.769mil|Location2.X=2851.019mil|Location1.Y=1690.241mil|Location2.Y=1701.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.147mm &lt; 0.254mm) Between Via (47mm,17mm) from Top Layer to Bottom Layer And Via (47mm,18.1mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.147mm] / [Bottom Solder] Mask Sliver [0.147mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2866.343mil|Location2.X=2877.593mil|Location1.Y=1663.666mil|Location2.Y=1674.916mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2866.343mil|Location2.X=2877.593mil|Location1.Y=1663.666mil|Location2.Y=1674.916mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.147mm &lt; 0.254mm) Between Via (47mm,17mm) from Top Layer to Bottom Layer And Via (48.1mm,17mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.147mm] / [Bottom Solder] Mask Sliver [0.147mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID3K1J15VMGFKQGBFQ21UO45HRHNSGKIRA5ZT0MMNVM2LPXCDBYLSP"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2087.619mil|Location2.X=2095.285mil|Location1.Y=1308.708mil|Location2.Y=1316.375mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2087.619mil|Location2.X=2095.285mil|Location1.Y=1308.708mil|Location2.Y=1316.375mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C10-1(28.1mm,8mm) on Top Layer And Text "C12" (27.635mm,7.01mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2107.978mil|Location2.X=2119.228mil|Location1.Y=1301.462mil|Location2.Y=1312.712mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2107.978mil|Location2.X=2119.228mil|Location1.Y=1301.462mil|Location2.Y=1312.712mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C10-1(28.1mm,8mm) on Top Layer And Track (28.55mm,7.8mm)(28.55mm,8.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2123.12mil|Location2.X=2130.786mil|Location1.Y=1302.194mil|Location2.Y=1309.86mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2123.12mil|Location2.X=2130.786mil|Location1.Y=1302.194mil|Location2.Y=1309.86mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C10-2(29mm,8mm) on Top Layer And Text "C12" (27.635mm,7.01mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2118.801mil|Location2.X=2130.051mil|Location1.Y=1301.462mil|Location2.Y=1312.712mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2118.801mil|Location2.X=2130.051mil|Location1.Y=1301.462mil|Location2.Y=1312.712mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C10-2(29mm,8mm) on Top Layer And Track (28.55mm,7.8mm)(28.55mm,8.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2891.444mil|Location2.X=2902.694mil|Location1.Y=1380.202mil|Location2.Y=1391.452mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2891.444mil|Location2.X=2902.694mil|Location1.Y=1380.202mil|Location2.Y=1391.452mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C11-1(48mm,10mm) on Top Layer And Track (48.45mm,9.8mm)(48.45mm,10.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2902.267mil|Location2.X=2913.517mil|Location1.Y=1380.202mil|Location2.Y=1391.452mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2902.267mil|Location2.X=2913.517mil|Location1.Y=1380.202mil|Location2.Y=1391.452mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C11-2(48.9mm,10mm) on Top Layer And Track (48.45mm,9.8mm)(48.45mm,10.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2107.98mil|Location2.X=2119.23mil|Location1.Y=1222.722mil|Location2.Y=1233.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2107.98mil|Location2.X=2119.23mil|Location1.Y=1222.722mil|Location2.Y=1233.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C12-1(28.1mm,6mm) on Top Layer And Track (28.55mm,5.8mm)(28.55mm,6.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2118.802mil|Location2.X=2130.052mil|Location1.Y=1222.722mil|Location2.Y=1233.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2118.802mil|Location2.X=2130.052mil|Location1.Y=1222.722mil|Location2.Y=1233.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C12-2(29mm,6mm) on Top Layer And Track (28.55mm,5.8mm)(28.55mm,6.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2785.067mil|Location2.X=2796.317mil|Location1.Y=2008.993mil|Location2.Y=2020.243mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2785.067mil|Location2.X=2796.317mil|Location1.Y=2008.993mil|Location2.Y=2020.243mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.238mm &lt; 0.254mm) Between Pad C9-1(46mm,26mm) on Top Layer And Text "C9" (45.488mm,25.193mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.238mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2815.982mil|Location2.X=2827.232mil|Location1.Y=2010.389mil|Location2.Y=2021.639mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2815.982mil|Location2.X=2827.232mil|Location1.Y=2010.389mil|Location2.Y=2021.639mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.242mm &lt; 0.254mm) Between Pad C9-1(46mm,26mm) on Top Layer And Text "R1" (47.49mm,25.308mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.242mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2792.525mil|Location2.X=2803.775mil|Location1.Y=2030.303mil|Location2.Y=2041.553mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2792.525mil|Location2.X=2803.775mil|Location1.Y=2030.303mil|Location2.Y=2041.553mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C9-1(46mm,26mm) on Top Layer And Track (45.8mm,26.45mm)(46.2mm,26.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2815.848mil|Location2.X=2827.098mil|Location1.Y=2045.51mil|Location2.Y=2056.76mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2815.848mil|Location2.X=2827.098mil|Location1.Y=2045.51mil|Location2.Y=2056.76mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.236mm &lt; 0.254mm) Between Pad C9-2(46mm,26.9mm) on Top Layer And Text "R1" (47.49mm,25.308mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.236mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2792.525mil|Location2.X=2803.775mil|Location1.Y=2041.126mil|Location2.Y=2052.376mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2792.525mil|Location2.X=2803.775mil|Location1.Y=2041.126mil|Location2.Y=2052.376mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad C9-2(46mm,26.9mm) on Top Layer And Track (45.8mm,26.45mm)(46.2mm,26.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2863.681mil|Location2.X=2874.931mil|Location1.Y=2024.491mil|Location2.Y=2035.741mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2863.681mil|Location2.X=2874.931mil|Location1.Y=2024.491mil|Location2.Y=2035.741mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.235mm &lt; 0.254mm) Between Pad R1-1(48mm,26.1mm) on Top Layer And Text "R1" (47.49mm,25.308mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.235mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2894.574mil|Location2.X=2905.824mil|Location1.Y=2028.951mil|Location2.Y=2042.6mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2894.574mil|Location2.X=2905.824mil|Location1.Y=2028.951mil|Location2.Y=2042.6mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.249mm &lt; 0.254mm) Between Pad R1-1(48mm,26.1mm) on Top Layer And Text "R3" (49.481mm,25.213mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.249mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2871.265mil|Location2.X=2882.515mil|Location1.Y=2034.238mil|Location2.Y=2045.488mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2871.265mil|Location2.X=2882.515mil|Location1.Y=2034.238mil|Location2.Y=2045.488mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad R1-1(48mm,26.1mm) on Top Layer And Track (47.8mm,26.55mm)(48.2mm,26.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2871.265mil|Location2.X=2882.515mil|Location1.Y=2045.061mil|Location2.Y=2056.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2871.265mil|Location2.X=2882.515mil|Location1.Y=2045.061mil|Location2.Y=2056.311mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad R1-2(48mm,27mm) on Top Layer And Track (47.8mm,26.55mm)(48.2mm,26.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1690.162mil|Location2.X=1701.412mil|Location1.Y=1242.9mil|Location2.Y=1254.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1690.162mil|Location2.X=1701.412mil|Location1.Y=1242.9mil|Location2.Y=1254.15mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad R2-1(18mm,6mm) on Top Layer And Track (17.8mm,6.45mm)(18.2mm,6.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1690.162mil|Location2.X=1701.412mil|Location1.Y=1253.723mil|Location2.Y=1264.973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1690.162mil|Location2.X=1701.412mil|Location1.Y=1253.723mil|Location2.Y=1264.973mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad R2-2(18mm,6.9mm) on Top Layer And Track (17.8mm,6.45mm)(18.2mm,6.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2938.201mil|Location2.X=2949.451mil|Location1.Y=1987.028mil|Location2.Y=1998.278mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2938.201mil|Location2.X=2949.451mil|Location1.Y=1987.028mil|Location2.Y=1998.278mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.038mm &lt; 0.254mm) Between Pad R3-1(50mm,25.285mm) on Top Layer And Text "R3" (49.481mm,25.213mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.038mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2938.534mil|Location2.X=2949.784mil|Location1.Y=2035.48mil|Location2.Y=2046.73mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2938.534mil|Location2.X=2949.784mil|Location1.Y=2035.48mil|Location2.Y=2046.73mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.021mm &lt; 0.254mm) Between Pad R3-2(50mm,26.715mm) on Top Layer And Text "R3" (49.481mm,25.213mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.021mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.485mil|Location2.X=3118.735mil|Location1.Y=1483.058mil|Location2.Y=1494.308mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.485mil|Location2.X=3118.735mil|Location1.Y=1483.058mil|Location2.Y=1494.308mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN1C-1(54mm,12.1mm) on Top Layer And Track (53.8mm,12.55mm)(54.2mm,12.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.485mil|Location2.X=3118.735mil|Location1.Y=1493.881mil|Location2.Y=1505.131mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.485mil|Location2.X=3118.735mil|Location1.Y=1493.881mil|Location2.Y=1505.131mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN1C-2(54mm,13mm) on Top Layer And Track (53.8mm,12.55mm)(54.2mm,12.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2626.676mil|Location2.X=2637.926mil|Location1.Y=1734.533mil|Location2.Y=1745.783mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2626.676mil|Location2.X=2637.926mil|Location1.Y=1734.533mil|Location2.Y=1745.783mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN1D-1(41.9mm,19mm) on Top Layer And Track (41.45mm,18.8mm)(41.45mm,19.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2615.854mil|Location2.X=2627.104mil|Location1.Y=1734.533mil|Location2.Y=1745.783mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2615.854mil|Location2.X=2627.104mil|Location1.Y=1734.533mil|Location2.Y=1745.783mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN1D-2(41mm,19mm) on Top Layer And Track (41.45mm,18.8mm)(41.45mm,19.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1572.052mil|Location2.X=1583.302mil|Location1.Y=1293.095mil|Location2.Y=1304.345mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1572.052mil|Location2.X=1583.302mil|Location1.Y=1293.095mil|Location2.Y=1304.345mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN2C-1(15mm,7.9mm) on Top Layer And Track (14.8mm,7.45mm)(15.2mm,7.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1572.052mil|Location2.X=1583.302mil|Location1.Y=1282.271mil|Location2.Y=1293.521mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1572.052mil|Location2.X=1583.302mil|Location1.Y=1282.271mil|Location2.Y=1293.521mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN2C-2(15mm,7mm) on Top Layer And Track (14.8mm,7.45mm)(15.2mm,7.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.493mil|Location2.X=2055.743mil|Location1.Y=1675.971mil|Location2.Y=1687.221mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.493mil|Location2.X=2055.743mil|Location1.Y=1675.971mil|Location2.Y=1687.221mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN2D-1(27mm,17mm) on Top Layer And Track (26.8mm,17.45mm)(27.2mm,17.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.493mil|Location2.X=2055.743mil|Location1.Y=1686.794mil|Location2.Y=1698.044mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.493mil|Location2.X=2055.743mil|Location1.Y=1686.794mil|Location2.Y=1698.044mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN2D-2(27mm,17.9mm) on Top Layer And Track (26.8mm,17.45mm)(27.2mm,17.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3114.95mil|Location2.X=3126.2mil|Location1.Y=1797.4mil|Location2.Y=1808.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3114.95mil|Location2.X=3126.2mil|Location1.Y=1797.4mil|Location2.Y=1808.65mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.243mm &lt; 0.254mm) Between Pad RN3A-1(53.9mm,20mm) on Top Layer And Text "RN3A" (51.235mm,20.519mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.243mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3099.116mil|Location2.X=3110.366mil|Location1.Y=1773.903mil|Location2.Y=1785.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3099.116mil|Location2.X=3110.366mil|Location1.Y=1773.903mil|Location2.Y=1785.153mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN3A-1(53.9mm,20mm) on Top Layer And Track (53.45mm,19.8mm)(53.45mm,20.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3075.379mil|Location2.X=3086.629mil|Location1.Y=1797.4mil|Location2.Y=1808.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3075.379mil|Location2.X=3086.629mil|Location1.Y=1797.4mil|Location2.Y=1808.65mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.243mm &lt; 0.254mm) Between Pad RN3A-2(53mm,20mm) on Top Layer And Text "RN3A" (51.235mm,20.519mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.243mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3088.294mil|Location2.X=3099.544mil|Location1.Y=1773.903mil|Location2.Y=1785.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3088.294mil|Location2.X=3099.544mil|Location1.Y=1773.903mil|Location2.Y=1785.153mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN3A-2(53mm,20mm) on Top Layer And Track (53.45mm,19.8mm)(53.45mm,20.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3113.757mil|Location2.X=3125.007mil|Location1.Y=1679.29mil|Location2.Y=1690.54mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3113.757mil|Location2.X=3125.007mil|Location1.Y=1679.29mil|Location2.Y=1690.54mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.243mm &lt; 0.254mm) Between Pad RN3D-1(54mm,17mm) on Top Layer And Text "RN3D" (51.234mm,17.519mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.243mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3103.053mil|Location2.X=3114.303mil|Location1.Y=1655.792mil|Location2.Y=1667.042mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3103.053mil|Location2.X=3114.303mil|Location1.Y=1655.792mil|Location2.Y=1667.042mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN3D-1(54mm,17mm) on Top Layer And Track (53.55mm,16.8mm)(53.55mm,17.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3072.543mil|Location2.X=3083.793mil|Location1.Y=1679.29mil|Location2.Y=1690.54mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3072.543mil|Location2.X=3083.793mil|Location1.Y=1679.29mil|Location2.Y=1690.54mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.243mm &lt; 0.254mm) Between Pad RN3D-2(53.1mm,17mm) on Top Layer And Text "RN3D" (51.234mm,17.519mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.243mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3092.23mil|Location2.X=3103.48mil|Location1.Y=1655.792mil|Location2.Y=1667.042mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3092.23mil|Location2.X=3103.48mil|Location1.Y=1655.792mil|Location2.Y=1667.042mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN3D-2(53.1mm,17mm) on Top Layer And Track (53.55mm,16.8mm)(53.55mm,17.2mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2706.16mil|Location2.X=2717.41mil|Location1.Y=2014.551mil|Location2.Y=2025.801mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2706.16mil|Location2.X=2717.41mil|Location1.Y=2014.551mil|Location2.Y=2025.801mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.237mm &lt; 0.254mm) Between Pad RN4A-1(44mm,26.1mm) on Top Layer And Text "RN4A" (43.488mm,24.235mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.237mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2713.785mil|Location2.X=2725.035mil|Location1.Y=2034.238mil|Location2.Y=2045.488mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2713.785mil|Location2.X=2725.035mil|Location1.Y=2034.238mil|Location2.Y=2045.488mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN4A-1(44mm,26.1mm) on Top Layer And Track (43.8mm,26.55mm)(44.2mm,26.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2706.16mil|Location2.X=2717.41mil|Location1.Y=2056.958mil|Location2.Y=2068.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2706.16mil|Location2.X=2717.41mil|Location1.Y=2056.958mil|Location2.Y=2068.208mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.237mm &lt; 0.254mm) Between Pad RN4A-2(44mm,27mm) on Top Layer And Text "RN4A" (43.488mm,24.235mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.237mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2713.785mil|Location2.X=2725.035mil|Location1.Y=2045.061mil|Location2.Y=2056.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2713.785mil|Location2.X=2725.035mil|Location1.Y=2045.061mil|Location2.Y=2056.311mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN4A-2(44mm,27mm) on Top Layer And Track (43.8mm,26.55mm)(44.2mm,26.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2658.417mil|Location2.X=2669.667mil|Location1.Y=2012.502mil|Location2.Y=2023.752mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2658.417mil|Location2.X=2669.667mil|Location1.Y=2012.502mil|Location2.Y=2023.752mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.237mm &lt; 0.254mm) Between Pad RN4B-1(42mm,26mm) on Top Layer And Text "RN4A" (43.488mm,24.235mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.237mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2627.419mil|Location2.X=2638.669mil|Location1.Y=2013.557mil|Location2.Y=2024.807mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2627.419mil|Location2.X=2638.669mil|Location1.Y=2013.557mil|Location2.Y=2024.807mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.237mm &lt; 0.254mm) Between Pad RN4B-1(42mm,26mm) on Top Layer And Text "RN4B" (41.488mm,24.272mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.237mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2635.044mil|Location2.X=2646.294mil|Location1.Y=2030.303mil|Location2.Y=2041.553mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2635.044mil|Location2.X=2646.294mil|Location1.Y=2030.303mil|Location2.Y=2041.553mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN4B-1(42mm,26mm) on Top Layer And Track (41.8mm,26.45mm)(42.2mm,26.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2658.386mil|Location2.X=2669.636mil|Location1.Y=2044.652mil|Location2.Y=2055.903mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2658.386mil|Location2.X=2669.636mil|Location1.Y=2044.652mil|Location2.Y=2055.903mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.243mm &lt; 0.254mm) Between Pad RN4B-2(42mm,26.9mm) on Top Layer And Text "RN4A" (43.488mm,24.235mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.243mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2627.419mil|Location2.X=2638.669mil|Location1.Y=2057.014mil|Location2.Y=2068.264mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2627.419mil|Location2.X=2638.669mil|Location1.Y=2057.014mil|Location2.Y=2068.264mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.237mm &lt; 0.254mm) Between Pad RN4B-2(42mm,26.9mm) on Top Layer And Text "RN4B" (41.488mm,24.272mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.237mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2635.044mil|Location2.X=2646.294mil|Location1.Y=2041.126mil|Location2.Y=2052.376mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2635.044mil|Location2.X=2646.294mil|Location1.Y=2041.126mil|Location2.Y=2052.376mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.125mm &lt; 0.254mm) Between Pad RN4B-2(42mm,26.9mm) on Top Layer And Track (41.8mm,26.45mm)(42.2mm,26.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.125mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1207.98mil|Location2.X=1219.23mil|Location1.Y=1090.833mil|Location2.Y=1102.083mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1207.98mil|Location2.X=1219.23mil|Location1.Y=1090.833mil|Location2.Y=1102.083mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.145mm &lt; 0.254mm) Between Pad RP-1(5.1mm,3mm) on Top Layer And Track (5.7mm,2.45mm)(6.3mm,2.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.145mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1207.98mil|Location2.X=1219.23mil|Location1.Y=1134.139mil|Location2.Y=1145.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1207.98mil|Location2.X=1219.23mil|Location1.Y=1134.139mil|Location2.Y=1145.389mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.145mm &lt; 0.254mm) Between Pad RP-1(5.1mm,3mm) on Top Layer And Track (5.7mm,3.55mm)(6.3mm,3.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.145mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1243.014mil|Location2.X=1254.264mil|Location1.Y=1090.833mil|Location2.Y=1102.083mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1243.014mil|Location2.X=1254.264mil|Location1.Y=1090.833mil|Location2.Y=1102.083mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.135mm &lt; 0.254mm) Between Pad RP-2(6.89mm,3mm) on Top Layer And Track (5.7mm,2.45mm)(6.3mm,2.45mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.135mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1243.014mil|Location2.X=1254.264mil|Location1.Y=1134.139mil|Location2.Y=1145.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1243.014mil|Location2.X=1254.264mil|Location1.Y=1134.139mil|Location2.Y=1145.389mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.135mm &lt; 0.254mm) Between Pad RP-2(6.89mm,3mm) on Top Layer And Track (5.7mm,3.55mm)(6.3mm,3.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.135mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2339.769mil|Location2.X=2351.019mil|Location1.Y=1533.744mil|Location2.Y=1544.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2339.769mil|Location2.X=2351.019mil|Location1.Y=1533.744mil|Location2.Y=1544.994mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.2mm &lt; 0.254mm) Between Pad RX-Yellow-1(33.8mm,14mm) on Top Layer And Track (34.5mm,13.7mm)(34.5mm,14.3mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.2mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2339.769mil|Location2.X=2351.019mil|Location1.Y=1651.856mil|Location2.Y=1663.106mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2339.769mil|Location2.X=2351.019mil|Location1.Y=1651.856mil|Location2.Y=1663.106mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.2mm &lt; 0.254mm) Between Pad TX-Yellow-1(33.8mm,17mm) on Top Layer And Track (34.5mm,16.7mm)(34.5mm,17.3mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.2mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID3LYLE32UPGYWOK0JRBL53UKICBSKERHSCNZERFBVV2YHF51IYRPI"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk to Silk (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2540.46mil|Location2.X=2548.127mil|Location1.Y=2385.93mil|Location2.Y=2393.597mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2540.46mil|Location2.X=2548.127mil|Location1.Y=2385.93mil|Location2.Y=2393.597mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (39.5mm,35.3mm) on Top Overlay And Text "LED-RB" (38.587mm,34.512mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2110.326mil|Location2.X=2121.576mil|Location1.Y=1298.179mil|Location2.Y=1311.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2110.326mil|Location2.X=2121.576mil|Location1.Y=1298.179mil|Location2.Y=1311.499mil|Absolute=True">Silk To Silk Clearance Constraint: (0.017mm &lt; 0.254mm) Between Text "C12" (27.635mm,7.01mm) on Top Overlay And Track (28.55mm,7.8mm)(28.55mm,8.2mm) on Top Overlay Silk Text to Silk Clearance [0.017mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2737.113mil|Location2.X=2748.363mil|Location1.Y=2038.562mil|Location2.Y=2049.812mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2737.113mil|Location2.X=2748.363mil|Location1.Y=2038.562mil|Location2.Y=2049.812mil|Absolute=True">Silk To Silk Clearance Constraint: (0.239mm &lt; 0.254mm) Between Text "C9" (45.488mm,25.193mm) on Top Overlay And Track (43.8mm,26.55mm)(44.2mm,26.55mm) on Top Overlay Silk Text to Silk Clearance [0.239mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2785.235mil|Location2.X=2796.485mil|Location1.Y=2035.715mil|Location2.Y=2046.965mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2785.235mil|Location2.X=2796.485mil|Location1.Y=2035.715mil|Location2.Y=2046.965mil|Absolute=True">Silk To Silk Clearance Constraint: (0.22mm &lt; 0.254mm) Between Text "C9" (45.488mm,25.193mm) on Top Overlay And Track (45.8mm,26.45mm)(46.2mm,26.45mm) on Top Overlay Silk Text to Silk Clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1562.515mil|Location2.X=1570.181mil|Location1.Y=2439.492mil|Location2.Y=2447.159mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1562.515mil|Location2.X=1570.181mil|Location1.Y=2439.492mil|Location2.Y=2447.159mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "HEAD/ARM-EN" (15.488mm,27.34mm) on Top Overlay And Track (12.21mm,36.68mm)(17.79mm,36.68mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1018.115mil|Location2.X=1029.365mil|Location1.Y=2432.422mil|Location2.Y=2443.672mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1018.115mil|Location2.X=1029.365mil|Location1.Y=2432.422mil|Location2.Y=2443.672mil|Absolute=True">Silk To Silk Clearance Constraint: (0.077mm &lt; 0.254mm) Between Text "HEAD/ARM-IN" (0.605mm,35.512mm) on Top Overlay And Track (0.73mm,36.665mm)(0.73mm,39.335mm) on Top Overlay Silk Text to Silk Clearance [0.077mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1169.076mil|Location2.X=1180.326mil|Location1.Y=2432.755mil|Location2.Y=2444.005mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1169.076mil|Location2.X=1180.326mil|Location1.Y=2432.755mil|Location2.Y=2444.005mil|Absolute=True">Silk To Silk Clearance Constraint: (0.06mm &lt; 0.254mm) Between Text "HEAD/ARM-IN" (0.605mm,35.512mm) on Top Overlay And Track (0.73mm,36.665mm)(11.27mm,36.665mm) on Top Overlay Silk Text to Silk Clearance [0.06mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1328.18mil|Location2.X=1341.137mil|Location1.Y=2432.624mil|Location2.Y=2443.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1328.18mil|Location2.X=1341.137mil|Location1.Y=2432.624mil|Location2.Y=2443.874mil|Absolute=True">Silk To Silk Clearance Constraint: (0.098mm &lt; 0.254mm) Between Text "HEAD/ARM-IN" (0.605mm,35.512mm) on Top Overlay And Track (8.54mm,36.665mm)(8.54mm,39.335mm) on Top Overlay Silk Text to Silk Clearance [0.098mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3215.156mil|Location2.X=3226.406mil|Location1.Y=2289.925mil|Location2.Y=2301.175mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3215.156mil|Location2.X=3226.406mil|Location1.Y=2289.925mil|Location2.Y=2301.175mil|Absolute=True">Silk To Silk Clearance Constraint: (0.06mm &lt; 0.254mm) Between Text "LCD" (56.488mm,31.723mm) on Top Overlay And Track (56.665mm,27.73mm)(56.665mm,38.27mm) on Top Overlay Silk Text to Silk Clearance [0.06mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1835.009mil|Location2.X=1846.259mil|Location1.Y=2432.755mil|Location2.Y=2444.005mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1835.009mil|Location2.X=1846.259mil|Location1.Y=2432.755mil|Location2.Y=2444.005mil|Absolute=True">Silk To Silk Clearance Constraint: (0.06mm &lt; 0.254mm) Between Text "LEGS-IN" (19.379mm,35.512mm) on Top Overlay And Track (19mm,36.665mm)(29.54mm,36.665mm) on Top Overlay Silk Text to Silk Clearance [0.06mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3040.853mil|Location2.X=3048.519mil|Location1.Y=1252.554mil|Location2.Y=1260.221mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3040.853mil|Location2.X=3048.519mil|Location1.Y=1252.554mil|Location2.Y=1260.221mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "Q1" (51.246mm,6.542mm) on Top Overlay And Track (46.45mm,6.415mm)(57.55mm,6.415mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1797.771mil|Location2.X=1805.438mil|Location1.Y=1310.045mil|Location2.Y=1317.712mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1797.771mil|Location2.X=1805.438mil|Location1.Y=1310.045mil|Location2.Y=1317.712mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "Q2" (20.458mm,7.156mm) on Top Overlay And Track (20.585mm,2.45mm)(20.585mm,13.55mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2863.687mil|Location2.X=2874.937mil|Location1.Y=2040.196mil|Location2.Y=2051.446mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2863.687mil|Location2.X=2874.937mil|Location1.Y=2040.196mil|Location2.Y=2051.446mil|Absolute=True">Silk To Silk Clearance Constraint: (0.236mm &lt; 0.254mm) Between Text "R1" (47.49mm,25.308mm) on Top Overlay And Track (47.8mm,26.55mm)(48.2mm,26.55mm) on Top Overlay Silk Text to Silk Clearance [0.236mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2894.492mil|Location2.X=2905.742mil|Location1.Y=2038.438mil|Location2.Y=2049.688mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2894.492mil|Location2.X=2905.742mil|Location1.Y=2038.438mil|Location2.Y=2049.688mil|Absolute=True">Silk To Silk Clearance Constraint: (0.235mm &lt; 0.254mm) Between Text "R3" (49.481mm,25.213mm) on Top Overlay And Track (47.8mm,26.55mm)(48.2mm,26.55mm) on Top Overlay Silk Text to Silk Clearance [0.235mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2924.237mil|Location2.X=2931.904mil|Location1.Y=1990.262mil|Location2.Y=1997.928mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2924.237mil|Location2.X=2931.904mil|Location1.Y=1990.262mil|Location2.Y=1997.928mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "R3" (49.481mm,25.213mm) on Top Overlay And Track (49.1mm,25.25mm)(49.1mm,26.75mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3093.705mil|Location2.X=3104.955mil|Location1.Y=1797.065mil|Location2.Y=1808.315mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3093.705mil|Location2.X=3104.955mil|Location1.Y=1797.065mil|Location2.Y=1808.315mil|Absolute=True">Silk To Silk Clearance Constraint: (0.227mm &lt; 0.254mm) Between Text "RN3A" (51.235mm,20.519mm) on Top Overlay And Track (53.45mm,19.8mm)(53.45mm,20.2mm) on Top Overlay Silk Text to Silk Clearance [0.227mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3096.722mil|Location2.X=3107.972mil|Location1.Y=1679.027mil|Location2.Y=1690.277mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3096.722mil|Location2.X=3107.972mil|Location1.Y=1679.027mil|Location2.Y=1690.277mil|Absolute=True">Silk To Silk Clearance Constraint: (0.233mm &lt; 0.254mm) Between Text "RN3D" (51.234mm,17.519mm) on Top Overlay And Track (53.55mm,16.8mm)(53.55mm,17.2mm) on Top Overlay Silk Text to Silk Clearance [0.233mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2706.162mil|Location2.X=2717.412mil|Location1.Y=2039.649mil|Location2.Y=2050.899mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2706.162mil|Location2.X=2717.412mil|Location1.Y=2039.649mil|Location2.Y=2050.899mil|Absolute=True">Silk To Silk Clearance Constraint: (0.237mm &lt; 0.254mm) Between Text "RN4A" (43.488mm,24.235mm) on Top Overlay And Track (43.8mm,26.55mm)(44.2mm,26.55mm) on Top Overlay Silk Text to Silk Clearance [0.237mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDDZKF4JT3Z5FNL3GZHI5YM1FRZPLS43QSTJ05AZKOPAIAJPI0L2JE"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Net Antennae (Tolerance=0mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2871.357mil|Location2.X=2914.195mil|Location1.Y=1651.949mil|Location2.Y=1718.171mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\ArduinoValveControl\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2871.357mil|Location2.X=2914.195mil|Location1.Y=1651.949mil|Location2.Y=1718.171mil|Absolute=True">Net Antennae: Via (48.1mm,17mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>
